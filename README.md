@@ -1,59 +1,257 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<div align="center">
+  <h1>🍽️ Ulu Cafe</h1>
+  <p>Sistem Manajemen Restoran & Pemesanan Online Modern</p>
+  
+  <img src="https://img.shields.io/badge/Laravel-12.0-FF2D20?style=for-the-badge&logo=laravel" alt="Laravel">
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php" alt="PHP">
+  <img src="https://img.shields.io/badge/TailwindCSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css" alt="TailwindCSS">
+  <img src="https://img.shields.io/badge/Alpine.js-3.15-8BC0D0?style=for-the-badge&logo=alpine.js" alt="Alpine.js">
+  <img src="https://img.shields.io/badge/Midtrans-Payment-0056B3?style=for-the-badge" alt="Midtrans">
+</div>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📋 Tentang Project
 
-## About Laravel
+Ulu Cafe adalah sistem manajemen restoran modern yang dibangun dengan Laravel 12. Aplikasi ini menyediakan solusi lengkap untuk mengelola operasional restoran, mulai dari pemesanan menu online, manajemen keranjang, pembayaran digital dengan Midtrans, hingga dashboard administrasi untuk pemilik dan kasir.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### ✨ Fitur Utama
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+#### 🛒 Fitur Pelanggan
+- **Menu Katalog**: Menampilkan daftar menu dengan kategori (Business Lunch, Dessert, dll)
+- **WOK Builder**: Sistem kustomisasi menu dengan pilihan bahan
+- **Keranjang Belanja**: Sistem keranjang untuk pengguna login dan guest
+- **Checkout & Pembayaran**: Integrasi dengan Midtrans (QRIS, Bank Transfer)
+- **Voucher Diskon**: Sistem voucher dengan tipe fixed dan percentage
+- **Riwayat Pesanan**: Melihat status dan riwayat pemesanan
+- **Autentikasi**: Login, registrasi, dan Google OAuth
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 🎛️ Fitur Administratif
+- **Dashboard Admin**: Monitoring dan pengelolaan sistem
+- **Dashboard Kasir**: Manajemen pesanan dan update status
+- **Dashboard Owner**: Kontrol penuh operasional restoran
+- **Manajemen Produk**: CRUD menu dengan upload gambar
+- **Manajemen Kategori**: Organisasi menu per kategori
+- **Manajemen Voucher**: Buat dan kelola voucher promosi
+- **Update Status Pesanan**: Tracking status pesanan real-time
 
-## Learning Laravel
+## 🏗️ Arsitektur Teknologi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### Backend
+- **Framework**: Laravel 12
+- **Database**: SQLite (default), dapat diubah ke MySQL/PostgreSQL
+- **Authentication**: Laravel Breeze + Google OAuth (Socialite)
+- **Payment Gateway**: Midtrans Integration
+- **Queue System**: Laravel Queues untuk background processing
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Frontend
+- **CSS Framework**: TailwindCSS 4.0
+- **JavaScript**: Alpine.js 3.15 untuk interaktivitas
+- **Build Tool**: Vite 7.0
+- **Template Engine**: Blade
 
-## Laravel Sponsors
+## 🚀 Instalasi & Setup
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Persyaratan Sistem
+- PHP 8.2 atau lebih tinggi
+- Composer
+- Node.js dan NPM
+- Database (SQLite, MySQL, atau PostgreSQL)
 
-### Premium Partners
+### Langkah-langkah Instalasi
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+1. **Clone Repository**
+   ```bash
+   git clone <repository-url>
+   cd ulu-cafe
+   ```
 
-## Contributing
+2. **Install Dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. **Setup Environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-## Code of Conduct
+4. **Konfigurasi Database**
+   Edit file `.env`:
+   ```env
+   DB_CONNECTION=sqlite
+   # DB_HOST=127.0.0.1
+   # DB_PORT=3306
+   # DB_DATABASE=ulu_cafe
+   # DB_USERNAME=root
+   # DB_PASSWORD=
+   ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+5. **Konfigurasi Midtrans**
+   Tambahkan ke file `.env`:
+   ```env
+   MIDTRANS_SERVER_KEY=your_server_key
+   MIDTRANS_CLIENT_KEY=your_client_key
+   MIDTRANS_IS_PRODUCTION=false
+   MIDTRANS_IS_SANITIZED=true
+   MIDTRANS_IS_3DS=true
+   ```
 
-## Security Vulnerabilities
+6. **Setup Google OAuth (Opsional)**
+   Tambahkan ke file `.env`:
+   ```env
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GOOGLE_REDIRECT_URI=http://localhost/auth/google/callback
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+7. **Run Migration**
+   ```bash
+   php artisan migrate
+   ```
 
-## License
+8. **Build Assets**
+   ```bash
+   npm run build
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+9. **Start Development Server**
+   ```bash
+   # Untuk development lengkap
+   composer run dev
+   
+   # Atau jalankan secara manual
+   php artisan serve
+   npm run dev
+   ```
+
+## 📁 Struktur Project
+
+```
+ulu-cafe/
+├── app/
+│   ├── Http/Controllers/          # Controller aplikasi
+│   │   ├── AuthController.php    # Autentikasi & Google OAuth
+│   │   ├── CartController.php    # Manajemen keranjang
+│   │   ├── OrderController.php   # Proses pesanan & pembayaran
+│   │   ├── ProductController.php # CRUD produk
+│   │   └── ...
+│   └── Models/                    # Model Eloquent
+│       ├── Product.php           # Model produk
+│       ├── Order.php             # Model pesanan
+│       ├── CartItem.php          # Model item keranjang
+│       ├── Voucher.php           # Model voucher
+│       └── ...
+├── database/
+│   ├── migrations/               # Database migrations
+│   └── seeders/                  # Database seeders
+├── resources/
+│   ├── views/                    # Blade templates
+│   │   ├── auth/                 # Halaman autentikasi
+│   │   ├── cart/                 # Halaman keranjang
+│   │   ├── checkout/             # Halaman checkout
+│   │   ├── dashboard/            # Dashboard admin/kasir/owner
+│   │   └── ...
+│   ├── css/                      # File CSS
+│   └── js/                       # File JavaScript
+├── routes/
+│   └── web.php                   # Route definition
+└── ...
+```
+
+## 🎯 Penggunaan Aplikasi
+
+### Flow Pelanggan
+1. **Browse Menu**: Pelanggan melihat daftar menu di halaman utama
+2. **Add to Cart**: Tambahkan menu ke keranjang (guest atau user login)
+3. **Checkout**: Isi informasi pemesanan dan pilih metode pembayaran
+4. **Payment**: Dapatkan QR code atau VA number dari Midtrans
+5. **Order Confirmation**: Cek status pembayaran dan konfirmasi pesanan
+
+### Flow Admin/Kasir/Owner
+1. **Login**: Masuk ke dashboard sesuai role
+2. **Manage Menu**: Tambah, edit, atau hapus menu dan kategori
+3. **Manage Vouchers**: Buat voucher promosi
+4. **Track Orders**: Monitor status pesanan
+5. **Update Status**: Ubah status pesanan (pending → processing → completed)
+
+## 🔧 Konfigurasi Lanjutan
+
+### Payment Methods
+Aplikasi mendukung:
+- **QRIS**: Pembayaran via QR code (GoPay, OVO, dll)
+- **Bank Transfer**: Transfer ke virtual account (BCA, BNI, BRI, Mandiri)
+
+### User Roles
+- **Customer**: Pengguna biasa yang bisa memesan
+- **Cashier**: Kasir yang bisa mengelola pesanan
+- **Owner**: Pemilik restoran dengan akses penuh
+- **Admin**: Administrator sistem
+
+### Voucher Types
+- **Fixed**: Diskon dengan jumlah tetap (Rp 10.000)
+- **Percentage**: Diskon persentase (10% dari total)
+
+## 🐛 Troubleshooting
+
+### Common Issues
+1. **Midtrans SSL Error**: Sudah dikonfigurasi untuk development (SSL verification disabled)
+2. **Google OAuth Error**: Pastikan redirect URL benar di Google Console
+3. **Asset Not Loading**: Jalankan `npm run build` untuk build assets
+4. **Database Connection**: Check konfigurasi database di `.env`
+
+### Development Tips
+- Gunakan `php artisan tinker` untuk debugging database
+- Check logs di `storage/logs/laravel.log`
+- Gunakan `php artisan queue:work` untuk processing queue
+
+## 📝 Development Commands
+
+```bash
+# Setup cepat
+composer run setup
+
+# Development dengan auto-reload
+composer run dev
+
+# Run tests
+composer run test
+
+# Build untuk production
+npm run build
+
+# Clear cache
+php artisan optimize:clear
+```
+
+## 🔐 Security Notes
+
+- Project ini menggunakan Laravel's built-in security features
+- Validasi input untuk semua form submissions
+- CSRF protection untuk semua POST requests
+- Password hashing dengan bcrypt
+- Midtrans sandbox untuk development
+
+## 🤝 Kontribusi
+
+Project ini bersifat private. Untuk kontribusi:
+1. Fork repository
+2. Buat branch feature (`git checkout -b feature/AmazingFeature`)
+3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Buka Pull Request
+
+
+
+## 👥 Tim Pengembang
+
+- **Developer**: [Deni Setiya]
+- **Version**: 1.0.0
+- **Last Updated**: December 2025
+
+---
+
+<div align="center">
+  <p>Dibuat dengan ❤️ untuk Ulu Cafe</p>
+  <p>© 2025 Ulu Cafe. All rights reserved.</p>
+</div>
