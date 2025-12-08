@@ -1,7 +1,53 @@
 # Docker Compose for Ulu-Cafe Production
-# Using image from GitHub Container Registry (GHCR)
+# Using Traefik for automatic HTTPS and image from GHCR
 
 services:
+  # ============================================
+  # Traefik Reverse Proxy with Auto SSL
+  # ============================================
+  traefik:
+    image: traefik:v3.2
+    container_name: ulucafe-traefik
+    restart: unless-stopped
+    command:
+      # API & Dashboard
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+      # Entrypoints
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      # HTTP to HTTPS redirect
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      # Let's Encrypt
+      - "--certificatesresolvers.letsencrypt.acme.email=${ACME_EMAIL:-admin@example.com}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      # Docker provider
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=ulucafe-network"
+      # Logs
+      - "--log.level=INFO"
+      - "--accesslog=true"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik/letsencrypt:/letsencrypt
+    networks:
+      - ulucafe-network
+    labels:
+      # Dashboard (optional - remove in production if not needed)
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_NAME:-localhost}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH:-}"
+
   # ============================================
   # Laravel Application with FrankenPHP
   # ============================================
@@ -23,48 +69,29 @@ services:
       - ./database:/app/database
     networks:
       - ulucafe-network
+    labels:
+      - "traefik.enable=true"
+      # HTTP Router
+      - "traefik.http.routers.app.rule=Host(`${DOMAIN_NAME:-localhost}`) || Host(`www.${DOMAIN_NAME:-localhost}`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      # Service
+      - "traefik.http.services.app.loadbalancer.server.port=8000"
+      # Middleware - Redirect www to non-www (optional)
+      - "traefik.http.middlewares.www-redirect.redirectregex.regex=^https://www\\.(.*)"
+      - "traefik.http.middlewares.www-redirect.redirectregex.replacement=https://$${1}"
+      - "traefik.http.middlewares.www-redirect.redirectregex.permanent=true"
+      # Security headers
+      - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000"
+      - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
+      - "traefik.http.middlewares.security-headers.headers.stsPreload=true"
+      - "traefik.http.middlewares.security-headers.headers.forceSTSHeader=true"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/up"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 10s
-
-  # ============================================
-  # Nginx Reverse Proxy with SSL
-  # ============================================
-  nginx:
-    image: nginx:alpine
-    container_name: ulucafe-nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./certbot/conf:/etc/letsencrypt:ro
-      - ./certbot/www:/var/www/certbot:ro
-    depends_on:
-      app:
-        condition: service_healthy
-    networks:
-      - ulucafe-network
-    command: '/bin/sh -c ''while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g "daemon off;"'''
-
-  # ============================================
-  # Certbot for SSL Certificate Management
-  # ============================================
-  certbot:
-    image: certbot/certbot
-    container_name: ulucafe-certbot
-    restart: unless-stopped
-    volumes:
-      - ./certbot/conf:/etc/letsencrypt
-      - ./certbot/www:/var/www/certbot
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
-    networks:
-      - ulucafe-network
 
 networks:
   ulucafe-network:

@@ -1,10 +1,7 @@
 #!/bin/bash
 # ============================================
-# Deployment Script for Ulu-Cafe (GHCR Version)
+# Deployment Script for Ulu-Cafe (GHCR + Traefik)
 # ============================================
-# This script is executed by GitHub Actions on the production server
-# Pulls image from GHCR instead of building locally
-#
 
 set -e
 
@@ -22,11 +19,8 @@ echo "📦 Using image: $IMAGE_TAG"
 echo "📥 Pulling latest image from GHCR..."
 docker pull $IMAGE_TAG
 
-# Generate nginx config from template if not exists
-if [ -n "$DOMAIN_NAME" ] && [ -f "./docker/nginx/conf.d/default.conf.template" ]; then
-    echo "⚙️ Generating nginx configuration..."
-    envsubst '${DOMAIN_NAME}' < ./docker/nginx/conf.d/default.conf.template > ./docker/nginx/conf.d/default.conf
-fi
+# Create letsencrypt directory if not exists
+mkdir -p traefik/letsencrypt
 
 # Export IMAGE_TAG for docker-compose
 export IMAGE_TAG
