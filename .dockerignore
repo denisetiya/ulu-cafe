@@ -1,0 +1,64 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Node
+node_modules
+
+# Composer dev dependencies (handled by multi-stage build)
+# vendor
+
+# Environment files
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Storage (will be mounted as volume)
+storage/app/*
+storage/logs/*
+storage/framework/cache/*
+storage/framework/sessions/*
+storage/framework/views/*
+!storage/app/.gitignore
+!storage/logs/.gitignore
+!storage/framework/.gitignore
+!storage/framework/cache/.gitignore
+!storage/framework/sessions/.gitignore
+!storage/framework/views/.gitignore
+
+# Local development
+.phpunit.result.cache
+phpunit.xml
+.php-cs-fixer.cache
+
+# Docker local files
+docker-compose.override.yml
+certbot
+
+# Documentation
+README.md
+CHANGELOG.md
+docs
+
+# Tests (not needed in production)
+tests
+
+# Scripts (needed on server, not in image)
+# scripts
+
+# Build artifacts
+public/hot
+public/build
+*.log
+
+# Database (for SQLite local dev)
+database/*.sqlite
+database/*.sqlite-journal
