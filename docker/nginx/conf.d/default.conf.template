@@ -17,8 +17,9 @@ server {
 
 # HTTPS - Main server block
 server {
-    listen 443 ssl http2;
-    listen [::]:443 ssl http2;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
     server_name ${DOMAIN_NAME} www.${DOMAIN_NAME};
 
     # SSL Certificates (from Let's Encrypt via Certbot)
@@ -38,11 +39,11 @@ server {
     # HSTS (uncomment after confirming SSL works)
     # add_header Strict-Transport-Security "max-age=63072000" always;
 
-    # OCSP Stapling
-    ssl_stapling on;
-    ssl_stapling_verify on;
-    resolver 8.8.8.8 8.8.4.4 valid=300s;
-    resolver_timeout 5s;
+    # OCSP Stapling (enable after getting real Let's Encrypt cert)
+    # ssl_stapling on;
+    # ssl_stapling_verify on;
+    # resolver 8.8.8.8 8.8.4.4 valid=300s;
+    # resolver_timeout 5s;
 
     # Proxy to FrankenPHP app
     location / {
