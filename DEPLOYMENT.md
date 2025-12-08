@@ -78,26 +78,16 @@ nano .env
 
 Tambahkan secrets berikut di repository GitHub (`Settings → Secrets → Actions`):
 
-| Secret           | Deskripsi               | Contoh                  |
-| ---------------- | ----------------------- | ----------------------- |
-| `SERVER_HOST`    | IP atau hostname server | `123.45.67.89`          |
-| `SERVER_USER`    | Username SSH            | `root` atau `ubuntu`    |
-| `SERVER_SSH_KEY` | Private SSH key         | `-----BEGIN OPENSSH...` |
-| `SERVER_PORT`    | Port SSH (optional)     | `22`                    |
-| `DOMAIN_NAME`    | Domain production       | `ulucafe.com`           |
+| Secret            | Deskripsi               | Contoh               |
+| ----------------- | ----------------------- | -------------------- |
+| `SERVER_HOST`     | IP atau hostname server | `123.45.67.89`       |
+| `SERVER_USER`     | Username SSH            | `root` atau `ubuntu` |
+| `SERVER_PASSWORD` | Password SSH            | `your-password`      |
+| `SERVER_PORT`     | Port SSH (optional)     | `22`                 |
+| `DOMAIN_NAME`     | Domain production       | `ulucafe.com`        |
+| `TOKEN_GITHUB`    | GitHub PAT untuk GHCR   | `ghp_xxxx...`        |
 
-### Generate SSH Key:
-
-```bash
-# Di local machine
-ssh-keygen -t ed25519 -C "deploy@ulucafe"
-
-# Copy public key ke server
-ssh-copy-id -i ~/.ssh/id_ed25519.pub user@your-server
-
-# Copy private key sebagai secret
-cat ~/.ssh/id_ed25519
-```
+> ⚠️ **Security Note:** Pastikan password yang digunakan kuat dan unik. Pertimbangkan untuk menggunakan SSH key untuk keamanan lebih baik.
 
 ---
 
