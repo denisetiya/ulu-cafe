@@ -161,7 +161,8 @@ jobs:
               run: |
                   echo "Waiting for deployment to complete..."
                   sleep 30
-                  curl -f https://${{ secrets.DOMAIN_NAME }}/up || exit 1
+                  # Use -k to skip SSL verification (for self-signed certs during initial setup)
+                  curl -fk https://${{ secrets.DOMAIN_NAME }}/up || curl -f http://${{ secrets.DOMAIN_NAME }}/up || exit 1
                   echo "✅ Deployment successful!"
 
             - name: Notify on failure
