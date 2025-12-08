@@ -1,0 +1,25 @@
+{
+    "order php_server before file_server"
+}
+
+:8000 {
+    root * /app/public
+    
+    # Enable compression
+    encode gzip zstd
+    
+    # Handle PHP with FrankenPHP
+    php_server
+    
+    # Serve static files
+    file_server
+    
+    # Health check endpoint
+    respond /up 200
+    
+    # Log format
+    log {
+        output stdout
+        format console
+    }
+}
