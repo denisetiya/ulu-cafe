@@ -1,4 +1,4 @@
-# 🚀 Deployment Guide - Ulu Cafe (Caddy)
+# 🚀 Deployment Guide - Ulu Coffee (Caddy)
 
 Deploy dengan Docker, FrankenPHP, dan **Caddy** untuk auto SSL.
 

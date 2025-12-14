@@ -3,25 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ulu Cafe - Tempat Nongkrong Asik di Lampung</title>
-    <meta name="description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Cafe Lampung. Tempat nongkrong asik dengan menu lezat, harga terjangkau, dan fasilitas lengkap. Kunjungi kami di ulucafe.cloud.">
-    <meta name="keywords" content="cafe, ulu cafe, ulucafe, cafe lampung, tempat nongkrong lampung, kopi lampung, cafe murah, coffee shop lampung, kuliner lampung">
-    <meta name="author" content="Ulu Cafe">
+    <title>Ulu Coffee - Tempat Nongkrong Asik di Lampung</title>
+    <meta name="description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Coffee Lampung. Tempat nongkrong asik dengan menu lezat, harga terjangkau, dan fasilitas lengkap. Kunjungi kami di ulucoffee.com.">
+    <meta name="keywords" content="cafe, ulu coffee, ulucoffee, cafe lampung, tempat nongkrong lampung, kopi lampung, cafe murah, coffee shop lampung, kuliner lampung">
+    <meta name="author" content="Ulu Coffee">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ulucafe.cloud">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ulucafe.cloud/">
-    <meta property="og:title" content="Ulu Cafe - Tempat Nongkrong Asik di Lampung">
-    <meta property="og:description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Cafe Lampung. Menu lezat, harga terjangkau.">
+    <meta property="og:title" content="Ulu Coffee - Tempat Nongkrong Asik di Lampung">
+    <meta property="og:description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Coffee Lampung. Menu lezat, harga terjangkau.">
     <meta property="og:image" content="{{ asset('images/hero-bg.jpg') }}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ulucafe.cloud/">
-    <meta property="twitter:title" content="Ulu Cafe - Tempat Nongkrong Asik di Lampung">
-    <meta property="twitter:description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Cafe Lampung.">
+    <meta property="twitter:title" content="Ulu Coffee - Tempat Nongkrong Asik di Lampung">
+    <meta property="twitter:description" content="Nikmati kopi terbaik dan suasana nyaman di Ulu Coffee Lampung.">
     <meta property="twitter:image" content="{{ asset('images/hero-bg.jpg') }}">
 
     <!-- Model Viewer -->
@@ -80,7 +80,7 @@
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-8">
                 <a href="/" class="text-xl font-bold flex items-center gap-2">
-                    <span class="text-[var(--color-primary)]">ULU</span> CAFE
+                    <span class="text-[var(--color-primary)]">ULU</span> COFFEE
                 </a>
                 
                 <!-- Desktop Nav -->
@@ -199,7 +199,7 @@
 
     <footer class="bg-[var(--color-dark-card)] mt-20 py-10 border-t border-white/5">
         <div class="container mx-auto px-6 text-center text-gray-400 text-sm">
-            <p>&copy; {{ date('Y') }} ULU CAFE. All rights reserved.</p>
+            <p>&copy; {{ date('Y') }} ULU COFFEE. All rights reserved.</p>
         </div>
     </footer>
     

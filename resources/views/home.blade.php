@@ -145,7 +145,7 @@
             <div class="flex flex-col md:flex-row justify-between items-end mb-12 fade-up">
                 <div>
                     <h2 class="text-3xl md:text-5xl font-bold mb-4">Galeri Kami</h2>
-                    <p class="text-gray-400">Intip suasana nyaman dan hidangan lezat di Ulu Cafe</p>
+                    <p class="text-gray-400">Intip suasana nyaman dan hidangan lezat di Ulu Coffee</p>
                 </div>
                 <div class="hidden md:block">
                      <a href="https://instagram.com" target="_blank" class="text-white hover:text-primary transition flex items-center gap-2">

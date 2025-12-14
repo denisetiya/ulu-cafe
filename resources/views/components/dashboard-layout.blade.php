@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Ulu Cafe</title>
+    <title>Dashboard - Ulu Coffee</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +16,7 @@
     <!-- Sidebar -->
     <aside class="w-64 bg-[var(--color-dark-card)] border-r border-white/10 flex flex-col h-full fixed inset-y-0 left-0 z-30">
         <div class="p-6 flex items-center gap-2 border-b border-white/10">
-             <span class="text-[var(--color-primary)] text-xl font-bold">ULU CAFE</span>
+             <span class="text-[var(--color-primary)] text-xl font-bold">ULU COFFEE</span>
              <span class="text-xs bg-gray-700 px-2 py-1 rounded text-gray-300 uppercase">{{ Auth::user()->role }}</span>
         </div>
         

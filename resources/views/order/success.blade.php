@@ -7,7 +7,7 @@
                 </svg>
             </div>
             <h1 class="text-3xl font-bold mb-4">Pesanan Berhasil!</h1>
-            <p class="text-gray-400 mb-8">Terima kasih telah memesan di ULU CAFE. Pesanan Anda akan segera diproses oleh dapur kami dan diantar ke meja nomor <span class="text-white font-bold">{{ $order->table_number }}</span>.</p>
+            <p class="text-gray-400 mb-8">Terima kasih telah memesan di ULU COFFEE. Pesanan Anda akan segera diproses oleh dapur kami dan diantar ke meja nomor <span class="text-white font-bold">{{ $order->table_number }}</span>.</p>
             
             <div class="bg-[var(--color-dark-bg)] p-6 rounded-xl mb-8 text-left">
                 <div class="flex justify-between mb-2">

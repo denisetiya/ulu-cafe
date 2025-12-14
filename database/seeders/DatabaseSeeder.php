@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'owner@ulucafe.com'],
             [
-                'name' => 'Owner Ulu Cafe',
+                'name' => 'Owner Ulu Coffee',
                 'password' => bcrypt('password'),
                 'role' => 'owner'
             ]
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'kasir@ulucafe.com'],
             [
-                'name' => 'Kasir Ulu Cafe',
+                'name' => 'Kasir Ulu Coffee',
                 'password' => bcrypt('password'),
                 'role' => 'cashier'
             ]
