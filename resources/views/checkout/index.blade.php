@@ -93,6 +93,10 @@
                             <span>Diskon</span>
                             <span id="discount-display">-Rp 0</span>
                         </div>
+                        <div class="flex justify-between text-gray-300 hidden" id="surcharge-row">
+                            <span>Biaya Layanan QRIS (0.7%)</span>
+                            <span id="surcharge-display">Rp 0</span>
+                        </div>
                         <div class="flex justify-between text-xl font-bold pt-4 text-white">
                             <span>Total</span>
                             <span id="total-display">Rp {{ number_format($total, 0, ',', '.') }}</span>
@@ -107,13 +111,56 @@
         </form>
     </section>
 
-    <script>
+                <script>
         const applyVoucherBtn = document.getElementById('apply-voucher');
         const voucherInput = document.getElementById('voucher_code');
         const voucherMessage = document.getElementById('voucher-message');
         const discountRow = document.getElementById('discount-row');
         const discountDisplay = document.getElementById('discount-display');
+        const surchargeRow = document.getElementById('surcharge-row');
+        const surchargeDisplay = document.getElementById('surcharge-display');
         const totalDisplay = document.getElementById('total-display');
+        const paymentMethods = document.getElementsByName('payment_method');
+        
+        let currentTotal = {{ $total }};
+        let currentDiscount = 0;
+
+        function formatCurrency(amount) {
+            return "Rp " + new Intl.NumberFormat('id-ID').format(amount);
+        }
+
+        function calculateFinalTotal() {
+            let amountAfterDiscount = currentTotal - currentDiscount;
+            let surcharge = 0;
+            
+            // Check if QRIS is selected
+            let isQris = false;
+            for(let radio of paymentMethods) {
+                if(radio.checked && radio.value === 'qris') {
+                    isQris = true;
+                    break;
+                }
+            }
+
+            if(isQris) {
+                surcharge = Math.ceil(amountAfterDiscount * 0.007);
+                surchargeRow.classList.remove('hidden');
+                surchargeDisplay.textContent = formatCurrency(surcharge);
+            } else {
+                surchargeRow.classList.add('hidden');
+                surchargeDisplay.textContent = formatCurrency(0);
+            }
+
+            totalDisplay.textContent = formatCurrency(amountAfterDiscount + surcharge);
+        }
+        
+        // Listen for payment method changes
+        paymentMethods.forEach(radio => {
+            radio.addEventListener('change', calculateFinalTotal);
+        });
+
+        // Initial calculation
+        document.addEventListener('DOMContentLoaded', calculateFinalTotal);
         
         applyVoucherBtn.onclick = function() {
             const code = voucherInput.value;
@@ -135,15 +182,19 @@
                     voucherMessage.classList.remove('hidden');
                     
                     discountRow.classList.remove('hidden');
-                    discountDisplay.textContent = "-Rp " + new Intl.NumberFormat('id-ID').format(data.discount_amount);
-                    totalDisplay.textContent = "Rp " + new Intl.NumberFormat('id-ID').format(data.new_total);
+                    discountDisplay.textContent = "-" + formatCurrency(data.discount_amount);
+                    
+                    currentDiscount = data.discount_amount;
+                    calculateFinalTotal();
                 } else {
                     voucherMessage.textContent = data.message;
                     voucherMessage.className = "text-xs mt-2 text-red-500";
                     voucherMessage.classList.remove('hidden');
                     
                     discountRow.classList.add('hidden');
-                    totalDisplay.textContent = "Rp {{ number_format($total, 0, ',', '.') }}";
+                    
+                    currentDiscount = 0;
+                    calculateFinalTotal();
                 }
             })
             .catch(error => {

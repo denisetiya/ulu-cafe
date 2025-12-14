@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'owner@ulucafe.com'],
             [
-                'name' => 'Owner Ulu Cafe',
+                'name' => 'Owner Ulu Coffee',
                 'password' => bcrypt('password'),
                 'role' => 'owner'
             ]
@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         User::firstOrCreate(
             ['email' => 'kasir@ulucafe.com'],
             [
-                'name' => 'Kasir Ulu Cafe',
+                'name' => 'Kasir Ulu Coffee',
                 'password' => bcrypt('password'),
                 'role' => 'cashier'
             ]
@@ -65,6 +65,11 @@ class DatabaseSeeder extends Seeder
         );
         // ... (other products, can be left as create if they don't conflict, but safer to use firstOrCreate or check)
         // Since this is a seeder run multiple times in development, firstOrCreate is better.
+        // Since this is a seeder run multiple times in development, firstOrCreate is better.
         // But for simplicity in this specific fix, I'll just fix the user/category creation.
+        
+        $this->call([
+           BannerSeeder::class,
+        ]);
     }
 }

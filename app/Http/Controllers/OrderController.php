@@ -43,10 +43,10 @@ class OrderController extends Controller
                     "id" => $item->product_id,
                     "name" => $item->product->name,
                     "quantity" => $item->quantity,
-                    "price" => $item->product->price,
+                    "price" => $item->product->final_price,
                     "image" => $item->product->image
                 ];
-                $total += $item->product->price * $item->quantity;
+                $total += $item->product->final_price * $item->quantity;
             }
         } else {
             $cart = Session::get('cart', []);
@@ -80,9 +80,9 @@ class OrderController extends Controller
                     "id" => $item->product_id,
                     "name" => $item->product->name,
                     "quantity" => $item->quantity,
-                    "price" => $item->product->price,
+                    "price" => $item->product->final_price,
                 ];
-                $total += $item->product->price * $item->quantity;
+                $total += $item->product->final_price * $item->quantity;
             }
         } else {
             $cart = Session::get('cart', []);
@@ -117,6 +117,18 @@ class OrderController extends Controller
 
         $finalTotal = $total - $discountAmount;
         
+        // Add QRIS Surcharge
+        $surcharge = 0;
+        if ($request->payment_method == 'qris') {
+            $surcharge = ceil($finalTotal * 0.007);
+            $finalTotal += $surcharge;
+        }
+
+        $notes = $request->notes;
+        if($surcharge > 0) {
+            $notes .= " (Termasuk Biaya QRIS: Rp " . number_format($surcharge, 0, ',', '.') . ")";
+        }
+        
         $order = Order::create([
             'user_id' => Auth::id(),
             'customer_name' => $request->customer_name,
@@ -126,7 +138,7 @@ class OrderController extends Controller
             'total_amount' => $finalTotal,
             'status' => 'pending',
             'payment_status' => 'unpaid',
-            'notes' => $request->notes,
+            'notes' => $notes,
             'voucher_code' => $voucherCode,
             'discount_amount' => $discountAmount
         ]);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Ulu Cafe</title>
+    <title>Dashboard - Ulu Coffee</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,12 +11,12 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-[var(--color-dark-bg)] text-white font-sans antialiased flex min-h-screen overflow-hidden">
+<body class="bg-[var(--color-dark-bg)] text-white font-sans antialiased flex h-screen overflow-hidden">
     
     <!-- Sidebar -->
     <aside class="w-64 bg-[var(--color-dark-card)] border-r border-white/10 flex flex-col h-full fixed inset-y-0 left-0 z-30">
         <div class="p-6 flex items-center gap-2 border-b border-white/10">
-             <span class="text-[var(--color-primary)] text-xl font-bold">ULU CAFE</span>
+             <span class="text-[var(--color-primary)] text-xl font-bold">ULU COFFEE</span>
              <span class="text-xs bg-gray-700 px-2 py-1 rounded text-gray-300 uppercase">{{ Auth::user()->role }}</span>
         </div>
         
@@ -38,9 +38,24 @@
                             Pesanan
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('cashier.history') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('cashier.history') ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)]' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }} transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            Riwayat Pesanan
+                        </a>
+                    </li>
                 @endif
 
                 <!-- Shared Menus for Owner and Cashier (as requested) -->
+                <li class="pt-4 pb-2 px-4 text-xs font-bold text-gray-500 uppercase">Manajemen Konten</li>
+
+                <li>
+                    <a href="{{ route('banners.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-lg {{ request()->routeIs('banners.*') ? 'bg-[var(--color-primary)]/20 text-[var(--color-primary)]' : 'text-gray-400 hover:bg-gray-800 hover:text-white' }} transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/></svg>
+                        Banner Promo
+                    </a>
+                </li>
+
                 <li class="pt-4 pb-2 px-4 text-xs font-bold text-gray-500 uppercase">Manajemen Menu</li>
                 
                 <li>

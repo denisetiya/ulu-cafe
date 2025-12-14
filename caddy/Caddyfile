@@ -1,0 +1,18 @@
+{
+    email {$ACME_EMAIL:ulucafebest@gmail.com}
+}
+
+{$DOMAIN_NAME:localhost} {
+    reverse_proxy app:8000
+
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        -Server
+    }
+}
+
+www.{$DOMAIN_NAME:localhost} {
+    redir https://{$DOMAIN_NAME:localhost}{uri} permanent
+}

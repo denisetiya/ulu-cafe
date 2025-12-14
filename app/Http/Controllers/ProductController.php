@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
@@ -14,6 +15,17 @@ class ProductController extends Controller
     {
         $products = Product::with('category')->latest()->get();
         return view('dashboard.products.index', compact('products'));
+    }
+
+    public function menu(Request $request)
+    {
+        $categories = Category::with(['products' => function($query) {
+            $query->where('is_active', true);
+        }])->get();
+        
+        $banners = Banner::where('is_active', true)->latest()->get();
+
+        return view('menu.index', compact('categories', 'banners'));
     }
 
     public function create()
@@ -29,6 +41,8 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable',
+            'discount_type' => 'nullable|in:fixed,percent',
+            'discount_amount' => 'nullable|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Max 2MB
         ]);
 
@@ -43,6 +57,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
             'description' => $request->description,
+            'discount_type' => $request->discount_type ?? 'fixed',
+            'discount_amount' => $request->discount_amount ?? 0,
             'image' => $imagePath,
             'is_active' => true
         ]);
@@ -63,6 +79,8 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'category_id' => 'required|exists:categories,id',
             'description' => 'nullable',
+            'discount_type' => 'nullable|in:fixed,percent',
+            'discount_amount' => 'nullable|numeric|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -72,6 +90,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'category_id' => $request->category_id,
             'description' => $request->description,
+            'discount_type' => $request->discount_type ?? 'fixed',
+            'discount_amount' => $request->discount_amount ?? 0,
         ];
 
         if ($request->hasFile('image')) {

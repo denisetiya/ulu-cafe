@@ -9,7 +9,7 @@ class CashierController extends Controller
 {
     public function index()
     {
-        // Get orders that are paid but not delivered yet, ordered by oldest first
+        // Active orders (Pending, Processing, Ready) - Oldest first
         $orders = Order::where('payment_status', 'paid')
             ->whereIn('status', ['pending', 'processing', 'ready'])
             ->with('items.product')
@@ -17,6 +17,18 @@ class CashierController extends Controller
             ->get();
 
         return view('cashier.index', compact('orders'));
+    }
+
+    public function history()
+    {
+        // Completed and Cancelled orders - Newest first, paginated
+        $orders = Order::where('payment_status', 'paid')
+            ->whereIn('status', ['delivered', 'cancelled'])
+            ->with('items.product')
+            ->orderBy('updated_at', 'desc')
+            ->paginate(10);
+
+        return view('cashier.history', compact('orders'));
     }
 
     public function updateStatus(Request $request, $id)
