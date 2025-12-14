@@ -1,6 +1,6 @@
-# 🚀 Deployment Guide - Ulu Cafe (Traefik)
+# 🚀 Deployment Guide - Ulu Cafe (Caddy)
 
-Deploy dengan Docker, FrankenPHP, dan **Traefik** untuk auto SSL.
+Deploy dengan Docker, FrankenPHP, dan **Caddy** untuk auto SSL.
 
 ## ⚡ Quick Start
 
@@ -15,14 +15,14 @@ nano ~/ulu-cafe/.env
 cd ~/ulu-cafe && docker compose up -d
 ```
 
-Traefik akan **otomatis** request SSL dari Let's Encrypt! 🎉
+Caddy akan **otomatis** request SSL dari Let's Encrypt! 🎉
 
 ---
 
 ## 📋 Architecture
 
 ```
-Internet → Traefik (80/443) → FrankenPHP (8000) → Laravel
+Internet → Caddy (80/443) → FrankenPHP (8000) → Laravel
               ↓
       Auto SSL Let's Encrypt
 ```
@@ -58,8 +58,14 @@ ACME_EMAIL=ulucafebest@gmail.com
 ```bash
 cd ~/ulu-cafe
 
+# Validate Caddy Config
+docker compose exec caddy caddy fmt --check
+
+# Reload Caddy Config
+docker compose exec caddy caddy reload --config /etc/caddy/Caddyfile
+
 # Logs
-docker compose logs -f traefik
+docker compose logs -f caddy
 docker compose logs -f app
 
 # Restart
@@ -80,8 +86,8 @@ docker compose exec app php artisan optimize:clear
 ~/ulu-cafe/
 ├── docker-compose.yml
 ├── .env
-├── traefik/
-│   └── letsencrypt/      # SSL certificates (auto-managed)
+├── caddy/
+│   └── Caddyfile         # Caddy configuration
 ├── storage/
 │   ├── app/
 │   └── logs/
