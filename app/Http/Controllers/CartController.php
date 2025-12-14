@@ -22,7 +22,7 @@ class CartController extends Controller
                     "id" => $item->product_id,
                     "name" => $item->product->name,
                     "quantity" => $item->quantity,
-                    "price" => $item->product->price,
+                    "price" => $item->product->final_price,
                     "image" => $item->product->image
                 ];
                 $total += $item->product->price * $item->quantity;
@@ -65,7 +65,7 @@ class CartController extends Controller
                     "id" => $product->id,
                     "name" => $product->name,
                     "quantity" => 1,
-                    "price" => $product->price,
+                    "price" => $product->final_price,
                     "image" => $product->image
                 ];
             }

@@ -10,9 +10,11 @@ use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\VoucherController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/menu', [ProductController::class, 'menu'])->name('menu.index');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
@@ -45,6 +47,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Cashier Routes
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier.dashboard');
+    Route::get('/cashier/history', [CashierController::class, 'history'])->name('cashier.history');
     Route::post('/cashier/order/{id}/status', [CashierController::class, 'updateStatus'])->name('cashier.updateStatus');
     
     // Owner Routes
@@ -54,4 +57,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('vouchers', VoucherController::class);
+    
+    // Banner Management
+    Route::resource('banners', BannerController::class);
+    Route::post('/banners/{banner}/toggle', [BannerController::class, 'toggle'])->name('banners.toggle');
 });
