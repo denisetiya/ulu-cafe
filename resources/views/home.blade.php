@@ -232,7 +232,7 @@
                         </div>
                     </div>
 
-                    <a href="https://maps.google.com" target="_blank" class="mt-10 inline-block w-full text-center bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition">
+                    <a href="https://www.google.com/maps/place/Ulu+Coffee/@-5.3792031,105.2632596,17z/data=!3m1!4b1!4m6!3m5!1s0x2e40db0008f08ee5:0xacdd45061e525eb9!8m2!3d-5.3792084!4d105.2658345!16s%2Fg%2F11x2jzr9sb?entry=ttu" target="_blank" class="mt-10 inline-block w-full text-center bg-white text-black font-bold py-3 rounded-xl hover:bg-gray-200 transition">
                         Buka di Google Maps
                     </a>
                 </div>
