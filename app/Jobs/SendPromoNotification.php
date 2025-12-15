@@ -17,14 +17,26 @@ class SendPromoNotification implements ShouldQueue
 
     public $promoType;
     public $promoData;
+    public $email;
+
+    /**
+     * The number of times the job may be attempted.
+     */
+    public $tries = 3;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     */
+    public $backoff = 5;
 
     /**
      * Create a new job instance.
      */
-    public function __construct(string $promoType, array $promoData)
+    public function __construct(string $promoType, array $promoData, ?string $email = null)
     {
         $this->promoType = $promoType;
         $this->promoData = $promoData;
+        $this->email = $email;
     }
 
     /**
@@ -32,15 +44,23 @@ class SendPromoNotification implements ShouldQueue
      */
     public function handle(): void
     {
-        // Get all customer users (exclude admin, cashier, owner)
+        // If specific email is provided, send to that email only
+        if ($this->email) {
+            Mail::to($this->email)->send(
+                new PromoNotification($this->promoType, $this->promoData)
+            );
+            return;
+        }
+
+        // Otherwise, dispatch individual jobs for each user with delay
         $users = User::whereNotIn('role', ['admin', 'cashier', 'owner'])
             ->whereNotNull('email')
             ->get();
 
-        foreach ($users as $user) {
-            Mail::to($user->email)->send(
-                new PromoNotification($this->promoType, $this->promoData)
-            );
+        foreach ($users as $index => $user) {
+            // Delay each email by 2 seconds to avoid rate limiting (2 req/sec limit)
+            self::dispatch($this->promoType, $this->promoData, $user->email)
+                ->delay(now()->addSeconds(($index + 1) * 2));
         }
     }
 }
