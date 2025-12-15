@@ -9,6 +9,10 @@
     <meta name="author" content="Ulu Coffee">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://ulucafe.cloud">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('logo/logo-background.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('logo/logo-background.png') }}">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">

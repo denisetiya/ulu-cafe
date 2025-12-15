@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Withdrawal;
+use App\Services\IrisService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class OwnerController extends Controller
 {
+    protected $irisService;
+
+    public function __construct(IrisService $irisService)
+    {
+        $this->irisService = $irisService;
+    }
+
     public function index()
     {
         // Stats
@@ -33,6 +42,78 @@ class OwnerController extends Controller
             ->take(5)
             ->get();
 
-        return view('owner.index', compact('todaySales', 'monthlySales', 'totalOrders', 'bestSellers'));
+        // Iris Balance
+        $balance = $this->irisService->getBalance();
+        $irisBalance = $balance['balance'] ?? 0;
+
+        // Banks list
+        $banks = $this->irisService->getBanks();
+
+        // Withdrawal history
+        $withdrawals = Withdrawal::latest()->take(10)->get();
+
+        return view('owner.index', compact(
+            'todaySales', 
+            'monthlySales', 
+            'totalOrders', 
+            'bestSellers',
+            'irisBalance',
+            'banks',
+            'withdrawals'
+        ));
+    }
+
+    public function processWithdraw(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:10000',
+            'bank_code' => 'required|string',
+            'account_number' => 'required|string',
+            'account_name' => 'required|string',
+            'notes' => 'nullable|string|max:255',
+        ]);
+
+        // Get bank name from code
+        $banks = $this->irisService->getBanks();
+        $bank = collect($banks)->firstWhere('code', $request->bank_code);
+        $bankName = $bank['name'] ?? $request->bank_code;
+
+        // Create withdrawal record
+        $withdrawal = Withdrawal::create([
+            'amount' => $request->amount,
+            'bank_code' => $request->bank_code,
+            'bank_name' => $bankName,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'notes' => $request->notes,
+            'status' => 'processing',
+        ]);
+
+        // Process payout via Iris
+        $result = $this->irisService->createPayout([
+            'amount' => $request->amount,
+            'bank_code' => $request->bank_code,
+            'account_number' => $request->account_number,
+            'account_name' => $request->account_name,
+            'notes' => $request->notes ?? 'Withdraw from Ulu Coffee',
+        ]);
+
+        if ($result['success']) {
+            $withdrawal->update([
+                'status' => 'success',
+                'iris_reference' => $result['reference'],
+            ]);
+
+            return redirect()->route('owner.dashboard')
+                ->with('success', 'Withdraw berhasil diproses! Ref: ' . $result['reference']);
+        } else {
+            $withdrawal->update([
+                'status' => 'failed',
+                'error_message' => $result['error'],
+            ]);
+
+            return redirect()->route('owner.dashboard')
+                ->with('error', 'Withdraw gagal: ' . $result['error']);
+        }
     }
 }

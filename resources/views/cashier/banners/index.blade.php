@@ -94,6 +94,16 @@
                         <textarea name="description" rows="3" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent placeholder-gray-600" placeholder="Keterangan tambahan..."></textarea>
                     </div>
 
+                    <div>
+                        <label class="flex items-center gap-3 cursor-pointer p-4 rounded-lg border border-gray-700 hover:bg-white/5 transition">
+                            <input type="checkbox" name="send_notification" value="1" class="w-5 h-5 rounded border-gray-600 text-[var(--color-primary)] focus:ring-[var(--color-primary)] bg-gray-800">
+                            <div>
+                                <span class="block font-bold">📧 Kirim Email ke Pelanggan</span>
+                                <span class="block text-xs text-gray-400">Semua pelanggan terdaftar akan menerima notifikasi promo ini</span>
+                            </div>
+                        </label>
+                    </div>
+
                     <div class="flex justify-end gap-3 pt-4">
                         <button type="button" @click="showAddModal = false; imagePreview = null" class="px-6 py-2 rounded-lg font-bold border border-gray-600 text-gray-400 hover:bg-gray-800 transition">
                             Batal

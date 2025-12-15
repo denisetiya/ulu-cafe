@@ -97,6 +97,16 @@
                             </div>
                         </label>
                     </div>
+                    
+                    <div>
+                        <label class="flex items-center gap-3 cursor-pointer p-4 rounded-lg border border-gray-700 hover:bg-white/5 transition">
+                            <input type="checkbox" name="send_notification" value="1" class="w-5 h-5 rounded border-gray-600 text-[var(--color-primary)] focus:ring-[var(--color-primary)] bg-[var(--color-dark-input)]">
+                            <div>
+                                <span class="block font-bold">📧 Kirim Email ke Pelanggan</span>
+                                <span class="block text-xs text-gray-400">Semua pelanggan terdaftar akan menerima notifikasi promo ini</span>
+                            </div>
+                        </label>
+                    </div>
 
                     <div class="flex justify-end gap-3 pt-4">
                         <button type="button" @click="showAddModal = false" class="px-6 py-2 rounded-lg font-bold border border-gray-600 text-gray-400 hover:bg-gray-800 transition">
