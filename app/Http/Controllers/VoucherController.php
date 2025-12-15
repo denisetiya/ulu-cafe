@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Voucher;
+use App\Jobs\SendPromoNotification;
 use Illuminate\Http\Request;
 
 class VoucherController extends Controller
@@ -26,7 +27,18 @@ class VoucherController extends Controller
             'type' => 'required|in:fixed,percent'
         ]);
 
-        Voucher::create($request->all());
+        $voucher = Voucher::create($request->except('send_notification'));
+
+        // Send email notification if checkbox is checked
+        if ($request->has('send_notification')) {
+            SendPromoNotification::dispatch('voucher', [
+                'code' => $voucher->code,
+                'type' => $voucher->type,
+                'amount' => $voucher->amount,
+                'min_purchase' => $voucher->min_purchase ?? 0,
+            ]);
+        }
+
         return redirect()->route('vouchers.index')->with('success', 'Voucher berhasil ditambahkan');
     }
 

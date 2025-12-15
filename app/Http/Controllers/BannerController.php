@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Jobs\SendPromoNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,12 +25,21 @@ class BannerController extends Controller
 
         $path = $request->file('image')->store('banners', 'public');
 
-        Banner::create([
+        $banner = Banner::create([
             'image_path' => $path,
             'title' => $request->title,
             'description' => $request->description,
             'is_active' => true,
         ]);
+
+        // Send email notification if checkbox is checked
+        if ($request->has('send_notification')) {
+            SendPromoNotification::dispatch('banner', [
+                'title' => $banner->title ?? 'Promo Baru!',
+                'description' => $banner->description,
+                'image_url' => $banner->image_url,
+            ]);
+        }
 
         return redirect()->route('banners.index')->with('success', 'Banner berhasil ditambahkan.');
     }

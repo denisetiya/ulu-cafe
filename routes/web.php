@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     
     // Owner Routes
     Route::get('/owner', [OwnerController::class, 'index'])->name('owner.dashboard');
+    Route::post('/owner/withdraw', [OwnerController::class, 'processWithdraw'])->name('owner.withdraw');
 
     // Menu & Voucher Management (Shared access for Owner & Cashier as requested)
     Route::resource('products', ProductController::class);
