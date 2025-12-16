@@ -38,6 +38,10 @@ if [ "$AUTO_MIGRATE" = "true" ]; then
     echo "✅ Migrations complete!"
 fi
 
+# Create storage symlink (required for uploaded files to be accessible)
+echo "🔗 Creating storage symlink..."
+php artisan storage:link --force || true
+
 # Cache Laravel config for production (skip if migration failed)
 if [ "$APP_ENV" = "production" ]; then
     echo "⚙️ Caching configuration..."
