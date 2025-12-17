@@ -284,7 +284,10 @@ class OrderController extends Controller
             return redirect()->route('login');
         }
 
-        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $orders = Order::with('items.product')
+            ->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->get();
         return view('order.history', compact('orders'));
     }
 }
