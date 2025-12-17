@@ -159,7 +159,7 @@
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
                 <!-- Item 1: Large Vertical -->
                 <div class="col-span-1 md:col-span-2 md:row-span-2 relative group overflow-hidden rounded-3xl fade-up delay-100">
-                    <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Cafe Interior">
+                    <img src="{{ asset('gallery/gallery-1.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Cafe Interior">
                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <span class="text-white font-bold bg-white/10 backdrop-blur px-4 py-2 rounded-full">Interior</span>
                     </div>
@@ -167,7 +167,7 @@
 
                 <!-- Item 2 -->
                 <div class="col-span-1 md:row-span-1 relative group overflow-hidden rounded-3xl fade-up delay-200">
-                    <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=500&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Latte Art">
+                    <img src="{{ asset('gallery/coffe.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Latte Art">
                      <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <span class="text-white font-bold bg-white/10 backdrop-blur px-4 py-2 rounded-full">Coffee</span>
                     </div>
@@ -175,7 +175,7 @@
 
                 <!-- Item 3 -->
                 <div class="col-span-1 md:row-span-1 relative group overflow-hidden rounded-3xl fade-up delay-300">
-                     <img src="https://images.unsplash.com/photo-1485962398705-ef6a13c41e8f?q=80&w=500&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Food">
+                     <img src="{{ asset('gallery/food.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Food">
                       <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <span class="text-white font-bold bg-white/10 backdrop-blur px-4 py-2 rounded-full">Food</span>
                     </div>
@@ -183,7 +183,7 @@
 
                 <!-- Item 4: Wide -->
                 <div class="col-span-2 md:col-span-2 relative group overflow-hidden rounded-3xl fade-up delay-100">
-                     <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Friends">
+                     <img src="{{ asset('gallery/memory.jpg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-110" alt="Friends">
                       <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
                         <span class="text-white font-bold bg-white/10 backdrop-blur px-4 py-2 rounded-full">Moments</span>
                     </div>
