@@ -6,6 +6,7 @@ use App\Models\Banner;
 use App\Jobs\SendPromoNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Services\CacheService;
 
 class BannerController extends Controller
 {
@@ -41,6 +42,8 @@ class BannerController extends Controller
             ]);
         }
 
+        CacheService::clearMenuCache();
+
         return redirect()->route('banners.index')->with('success', 'Banner berhasil ditambahkan.');
     }
 
@@ -51,6 +54,9 @@ class BannerController extends Controller
         Storage::disk('public')->delete('banners/' . $filename);
         
         $banner->delete();
+
+        CacheService::clearMenuCache();
+
         return redirect()->route('banners.index')->with('success', 'Banner berhasil dihapus.');
     }
 
@@ -58,6 +64,8 @@ class BannerController extends Controller
     {
         $banner->is_active = !$banner->is_active;
         $banner->save();
+
+        CacheService::clearMenuCache();
         
         return redirect()->back()->with('success', 'Status banner diperbarui.');
     }

@@ -8,6 +8,8 @@ use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Cache;
+use App\Services\CacheService;
 
 class ProductController extends Controller
 {
@@ -19,11 +21,17 @@ class ProductController extends Controller
 
     public function menu(Request $request)
     {
-        $categories = Category::with(['products' => function($query) {
-            $query->where('is_active', true);
-        }])->get();
+        // Cache menu categories for 1 hour
+        $categories = Cache::remember('menu_categories', 3600, function() {
+            return Category::with(['products' => function($query) {
+                $query->where('is_active', true);
+            }])->get();
+        });
         
-        $banners = Banner::where('is_active', true)->latest()->get();
+        // Cache active banners for 1 hour
+        $banners = Cache::remember('menu_banners', 3600, function() {
+            return Banner::where('is_active', true)->latest()->get();
+        });
 
         return view('menu.index', compact('categories', 'banners'));
     }
@@ -62,6 +70,8 @@ class ProductController extends Controller
             'image' => $imagePath,
             'is_active' => true
         ]);
+
+        CacheService::clearMenuCache();
 
         return redirect()->route('products.index')->with('success', 'Menu berhasil ditambahkan');
     }
@@ -104,6 +114,8 @@ class ProductController extends Controller
 
         $product->update($data);
 
+        CacheService::clearMenuCache();
+
         return redirect()->route('products.index')->with('success', 'Menu berhasil diperbarui');
     }
 
@@ -113,6 +125,9 @@ class ProductController extends Controller
             Storage::disk('public')->delete($product->image);
         }
         $product->delete();
+
+        CacheService::clearMenuCache();
+
         return redirect()->route('products.index')->with('success', 'Menu berhasil dihapus');
     }
 }
