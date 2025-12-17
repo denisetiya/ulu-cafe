@@ -238,23 +238,26 @@
                         
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-6">
                             @foreach($category->products as $product)
+                                @php
+                                    $productData = [
+                                        'id' => $product->id,
+                                        'name' => $product->name,
+                                        'description' => str_replace(["\r\n", "\r", "\n"], ' ', $product->description ?? ''),
+                                        'price' => $product->price,
+                                        'final_price' => $product->final_price,
+                                        'image' => $product->image,
+                                        'discount_amount' => $product->discount_amount,
+                                        'discount_type' => $product->discount_type,
+                                    ];
+                                @endphp
                                 <div x-data="{ 
-                                        name: '{{ addslashes($product->name) }}', 
+                                        name: {{ Js::from($product->name) }}, 
                                         price: {{ $product->final_price }}, 
                                         catId: {{ $category->id }},
                                         discountAmount: {{ $product->discount_amount }} 
                                      }"
                                      x-show="isVisible(name, price, catId, discountAmount)"
-                                     @click="openProductModal({
-                                        id: {{ $product->id }},
-                                        name: '{{ addslashes($product->name) }}',
-                                        description: '{{ addslashes($product->description) }}',
-                                        price: {{ $product->price }},
-                                        final_price: {{ $product->final_price }},
-                                        image: '{{ $product->image }}',
-                                        discount_amount: {{ $product->discount_amount }},
-                                        discount_type: '{{ $product->discount_type }}'
-                                     })"
+                                     @click="openProductModal({{ Js::from($productData) }})"
                                      class="group relative bg-dark-card/50 backdrop-blur-sm rounded-2xl md:rounded-3xl p-3 md:p-4 border border-white/5 hover:border-primary/30 hover:shadow-[0_0_30px_rgba(0,0,0,0.3)] transition-all duration-500 hover:-translate-y-2 flex flex-col h-full cursor-pointer"
                                      x-transition:enter="transition ease-out duration-300"
                                      x-transition:enter-start="opacity-0 scale-95"
