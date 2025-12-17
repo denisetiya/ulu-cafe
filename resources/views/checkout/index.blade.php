@@ -94,7 +94,7 @@
                             <span id="discount-display">-Rp 0</span>
                         </div>
                         <div class="flex justify-between text-gray-300 hidden" id="surcharge-row">
-                            <span>Biaya Layanan QRIS (0.7%)</span>
+                            <span id="surcharge-label">Biaya Layanan</span>
                             <span id="surcharge-display">Rp 0</span>
                         </div>
                         <div class="flex justify-between text-xl font-bold pt-4 text-white">
@@ -132,19 +132,28 @@
         function calculateFinalTotal() {
             let amountAfterDiscount = currentTotal - currentDiscount;
             let surcharge = 0;
+            let surchargeLabel = '';
             
-            // Check if QRIS is selected
-            let isQris = false;
+            // Get selected payment method
+            let selectedMethod = '';
             for(let radio of paymentMethods) {
-                if(radio.checked && radio.value === 'qris') {
-                    isQris = true;
+                if(radio.checked) {
+                    selectedMethod = radio.value;
                     break;
                 }
             }
 
-            if(isQris) {
+            if(selectedMethod === 'qris') {
                 surcharge = Math.ceil(amountAfterDiscount * 0.007);
+                surchargeLabel = 'Biaya Layanan QRIS (0.7%)';
                 surchargeRow.classList.remove('hidden');
+                document.getElementById('surcharge-label').textContent = surchargeLabel;
+                surchargeDisplay.textContent = formatCurrency(surcharge);
+            } else if(selectedMethod.startsWith('bank_transfer_')) {
+                surcharge = 4000; // Biaya admin VA
+                surchargeLabel = 'Biaya Admin VA';
+                surchargeRow.classList.remove('hidden');
+                document.getElementById('surcharge-label').textContent = surchargeLabel;
                 surchargeDisplay.textContent = formatCurrency(surcharge);
             } else {
                 surchargeRow.classList.add('hidden');

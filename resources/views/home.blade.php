@@ -89,7 +89,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-6 left-6">
                             <h3 class="text-2xl font-bold text-white mb-1">Manual Brew</h3>
-                            <p class="text-coffee-accent text-sm font-medium tracking-wider uppercase">V60 • Japanese • Kalita</p>
+                            <p class="text-coffee-accent text-sm font-medium tracking-wider uppercase">Di buat dengan sepenuh hati</p>
                         </div>
                     </div>
                     <div class="p-8">
@@ -125,7 +125,7 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                         <div class="absolute bottom-6 left-6">
                             <h3 class="text-2xl font-bold text-white mb-1">Ulu Signature</h3>
-                            <p class="text-coffee-accent text-sm font-medium tracking-wider uppercase">Palm Sugar • Avocado</p>
+                            <p class="text-coffee-accent text-sm font-medium tracking-wider uppercase">Kopi original Ulu Coffee</p>
                         </div>
                     </div>
                     <div class="p-8">
@@ -148,9 +148,9 @@
                     <p class="text-gray-400">Intip suasana nyaman dan hidangan lezat di Ulu Coffee</p>
                 </div>
                 <div class="hidden md:block">
-                     <a href="https://instagram.com" target="_blank" class="text-white hover:text-primary transition flex items-center gap-2">
+                     <a href="https://instagram.com/ulucoffe_" target="_blank" class="text-white hover:text-primary transition flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-                        Follow @ulucafe
+                        Follow @ulucoffe_
                      </a>
                 </div>
             </div>
@@ -227,7 +227,7 @@
                             </div>
                             <div>
                                 <h3 class="font-bold text-lg mb-1">Kontak</h3>
-                                <p class="text-gray-400">+62 812 3456 7890</p>
+                                <p class="text-gray-400">+62 831 7024 9278</p>
                             </div>
                         </div>
                     </div>

@@ -117,16 +117,21 @@ class OrderController extends Controller
 
         $finalTotal = $total - $discountAmount;
         
-        // Add QRIS Surcharge
+        // Add Payment Surcharge
         $surcharge = 0;
+        $surchargeLabel = '';
         if ($request->payment_method == 'qris') {
             $surcharge = ceil($finalTotal * 0.007);
-            $finalTotal += $surcharge;
+            $surchargeLabel = 'QRIS';
+        } elseif (str_starts_with($request->payment_method, 'bank_transfer_')) {
+            $surcharge = 4000; // Biaya admin VA
+            $surchargeLabel = 'VA';
         }
+        $finalTotal += $surcharge;
 
         $notes = $request->notes;
         if($surcharge > 0) {
-            $notes .= " (Termasuk Biaya QRIS: Rp " . number_format($surcharge, 0, ',', '.') . ")";
+            $notes .= " (Termasuk Biaya " . $surchargeLabel . ": Rp " . number_format($surcharge, 0, ',', '.') . ")";
         }
         
         $order = Order::create([
@@ -175,9 +180,6 @@ class OrderController extends Controller
         
         if ($paymentMethod == 'qris') {
             $params['payment_type'] = 'qris';
-            $params['qris'] = [
-                'acquirer' => 'gopay'
-            ];
         } elseif (str_starts_with($paymentMethod, 'bank_transfer_')) {
             $params['payment_type'] = 'bank_transfer';
             $bank = str_replace('bank_transfer_', '', $paymentMethod);

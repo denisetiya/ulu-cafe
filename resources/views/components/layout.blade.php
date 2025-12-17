@@ -95,7 +95,7 @@
                     @auth
                         <a href="{{ route('order.history') }}" class="hover:text-white transition">Riwayat Pesanan</a>
                     @endauth
-                    <a href="#" class="hover:text-white transition">Kontak</a>
+                    <a href="{{ route('contact') }}" class="hover:text-white transition">Kontak</a>
                 </nav>
 
                 <!-- Mobile Menu Button -->
@@ -122,7 +122,7 @@
                         @auth
                             <a href="{{ route('order.history') }}" class="text-gray-300 hover:text-white block py-2">Riwayat Pesanan</a>
                         @endauth
-                        <a href="#" class="text-gray-300 hover:text-white block py-2">Kontak</a>
+                        <a href="{{ route('contact') }}" class="text-gray-300 hover:text-white block py-2">Kontak</a>
                     </div>
                 </div>
             </div>

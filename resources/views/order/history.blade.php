@@ -34,9 +34,42 @@
                             <div class="text-gray-400 text-sm mb-1">
                                 Meja: <span class="text-white font-semibold">{{ $order->table_number }}</span>
                             </div>
-                            <div class="text-gray-400 text-sm">
+                            <div class="text-gray-400 text-sm mb-2">
                                 Total: <span class="text-[var(--color-primary)] font-bold">Rp {{ number_format($order->total_amount, 0, ',', '.') }}</span>
                             </div>
+                            
+                            {{-- Status Pesanan --}}
+                            @if($order->payment_status == 'paid')
+                                <div class="flex items-center gap-2 mt-2">
+                                    <span class="text-gray-400 text-sm">Status Pesanan:</span>
+                                    @if($order->status == 'pending')
+                                        <span class="flex items-center gap-1 bg-blue-500/20 text-blue-400 text-xs px-3 py-1 rounded-full font-bold">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            Menunggu Konfirmasi
+                                        </span>
+                                    @elseif($order->status == 'processing')
+                                        <span class="flex items-center gap-1 bg-orange-500/20 text-orange-400 text-xs px-3 py-1 rounded-full font-bold animate-pulse">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
+                                            Sedang Dimasak
+                                        </span>
+                                    @elseif($order->status == 'ready')
+                                        <span class="flex items-center gap-1 bg-green-500/20 text-green-400 text-xs px-3 py-1 rounded-full font-bold">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                            Diantarkan
+                                        </span>
+                                    @elseif($order->status == 'delivered')
+                                        <span class="flex items-center gap-1 bg-gray-500/20 text-gray-400 text-xs px-3 py-1 rounded-full font-bold">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                            Selesai
+                                        </span>
+                                    @elseif($order->status == 'cancelled')
+                                        <span class="flex items-center gap-1 bg-red-500/20 text-red-400 text-xs px-3 py-1 rounded-full font-bold">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                            Dibatalkan
+                                        </span>
+                                    @endif
+                                </div>
+                            @endif
                         </div>
                         
                         <div class="flex gap-3 w-full md:w-auto">
