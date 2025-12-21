@@ -30,7 +30,7 @@
                                             <td class="py-4">
                                                 <div class="flex items-center gap-4">
                                                     <div class="w-16 h-16 bg-gray-700 rounded overflow-hidden">
-                                                        <img src="https://placehold.co/100x100/333/white?text={{ $details['name'] }}" class="w-full h-full object-cover">
+                                                        <img src="{{ isset($details['image']) ? asset('storage/' . $details['image']) : 'https://placehold.co/100x100/333/white?text=' . urlencode($details['name']) }}" class="w-full h-full object-cover">
                                                     </div>
                                                     <span class="font-bold">{{ $details['name'] }}</span>
                                                 </div>
@@ -67,7 +67,7 @@
                             @foreach($cart as $id => $details)
                                 <div class="flex gap-4 border-b border-gray-700 pb-6 last:border-0 last:pb-0">
                                     <div class="w-20 h-20 bg-gray-700 rounded-lg overflow-hidden flex-shrink-0">
-                                        <img src="https://placehold.co/100x100/333/white?text={{ $details['name'] }}" class="w-full h-full object-cover">
+                                        <img src="{{ isset($details['image']) ? asset('storage/' . $details['image']) : 'https://placehold.co/100x100/333/white?text=' . urlencode($details['name']) }}" class="w-full h-full object-cover">
                                     </div>
                                     <div class="flex-1">
                                         <div class="flex justify-between items-start mb-2">
