@@ -37,8 +37,49 @@ class CashierController extends Controller
         $order->status = $request->status;
         $order->save();
 
-        \App\Events\OrderUpdate::dispatch('Order #' . $order->id . ' status updated to ' . $request->status);
+        // If AJAX request, return JSON
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => true, 'message' => 'Status pesanan berhasil diperbarui.']);
+        }
 
         return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
+    }
+
+    /**
+     * Get orders as JSON for AJAX polling
+     */
+    public function ordersJson()
+    {
+        $orders = Order::where('payment_status', 'paid')
+            ->whereIn('status', ['pending', 'processing', 'ready'])
+            ->with('items.product')
+            ->orderBy('created_at', 'asc')
+            ->get()
+            ->map(function ($order) {
+                return [
+                    'id' => $order->id,
+                    'table_number' => $order->table_number,
+                    'customer_name' => $order->customer_name,
+                    'status' => $order->status,
+                    'notes' => $order->notes,
+                    'created_at' => $order->created_at->diffForHumans(),
+                    'updated_at' => $order->updated_at->diffForHumans(),
+                    'items' => $order->items->map(function ($item) {
+                        return [
+                            'quantity' => $item->quantity,
+                            'product_name' => $item->product ? $item->product->name : 'Menu Dihapus',
+                        ];
+                    }),
+                ];
+            });
+
+        return response()->json([
+            'orders' => $orders,
+            'counts' => [
+                'pending' => $orders->where('status', 'pending')->count(),
+                'processing' => $orders->where('status', 'processing')->count(),
+                'ready' => $orders->where('status', 'ready')->count(),
+            ],
+        ]);
     }
 }

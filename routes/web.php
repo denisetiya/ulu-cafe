@@ -54,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     // Cashier Routes
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier.dashboard');
     Route::get('/cashier/history', [CashierController::class, 'history'])->name('cashier.history');
+    Route::get('/cashier/orders/json', [CashierController::class, 'ordersJson'])->name('cashier.ordersJson');
     Route::post('/cashier/order/{id}/status', [CashierController::class, 'updateStatus'])->name('cashier.updateStatus');
     
     // Owner Routes
