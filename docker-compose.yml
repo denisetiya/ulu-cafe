@@ -58,6 +58,8 @@ services:
     image: ${IMAGE_TAG:-ghcr.io/denisetiya/ulu-cafe:latest}
     container_name: ulucafe-reverb
     restart: unless-stopped
+    environment:
+      - CACHE_STORE=array
     env_file:
       - .env
     volumes:

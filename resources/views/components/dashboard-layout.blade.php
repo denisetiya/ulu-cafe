@@ -4,6 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Ulu Coffee</title>
+    <script>
+        window.ReverbConfig = {
+            key: "{{ config('reverb.apps.0.key') }}",
+            host: "{{ config('reverb.servers.reverb.options.host', request()->getHost()) }}",
+            port: {{ config('reverb.servers.reverb.options.port', 443) }},
+            scheme: "{{ config('reverb.servers.reverb.options.scheme', 'https') }}"
+        };
+    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/png" href="{{ asset('logo/logo-background.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
