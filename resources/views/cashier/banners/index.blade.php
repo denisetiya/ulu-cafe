@@ -19,7 +19,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($banners as $banner)
                 <div class="bg-[var(--color-dark-card)] rounded-xl border border-white/10 overflow-hidden group">
-                    <div class="aspect-video w-full bg-gray-800 relative">
+                    <div class="w-full bg-gray-800 relative" style="aspect-ratio: 3/1;">
                         <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}" class="w-full h-full object-cover {{ !$banner->is_active ? 'grayscale opacity-50' : '' }}">
                         
                         <!-- Status Badge -->
@@ -74,13 +74,16 @@
                     
                     <div>
                         <label class="block text-sm text-gray-400 mb-2">Gambar Banner</label>
-                        <div class="border-2 border-dashed border-gray-700 rounded-lg p-8 text-center hover:border-[var(--color-primary)] transition cursor-pointer relative" id="dropzone">
+                        <p class="text-xs text-gray-500 mb-2">📐 Ukuran optimal: <span class="text-primary">1200 x 400 px</span> (rasio 3:1)</p>
+                        <div class="border-2 border-dashed border-gray-700 rounded-lg p-4 text-center hover:border-[var(--color-primary)] transition cursor-pointer relative" id="dropzone">
                             <input type="file" name="image" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" required @change="previewImage($event)">
                             <div x-show="!imagePreview">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-gray-500 mb-2"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
                                 <p class="text-xs text-gray-500">Klik atau drag gambar ke sini</p>
                             </div>
-                            <img x-show="imagePreview" :src="imagePreview" class="w-full h-auto rounded-lg object-contain max-h-48 mx-auto">
+                            <div x-show="imagePreview" class="w-full" style="aspect-ratio: 3/1;">
+                                <img :src="imagePreview" class="w-full h-full rounded-lg object-cover">
+                            </div>
                         </div>
                     </div>
 
