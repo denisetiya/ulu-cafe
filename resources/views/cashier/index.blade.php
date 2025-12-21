@@ -264,7 +264,7 @@
                                 ${status === 'pending' ? order.created_at : order.updated_at}
                             </div>
                         </div>
-                        <span class="bg-gray-800 text-gray-400 px-3 py-1 rounded-full text-xs font-mono border border-gray-700">#${order.id.slice(-4)}</span>
+                        <span class="bg-gray-800 text-gray-400 px-3 py-1 rounded-full text-xs font-mono border border-gray-700">#${String(order.id).slice(-4)}</span>
                     </div>
                     
                     <div class="py-4 border-y border-gray-800 my-4 pl-4 space-y-3">
