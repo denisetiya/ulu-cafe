@@ -1,10 +1,11 @@
 <x-dashboard-layout title="Kategori Menu">
     <div x-data="categoryManager()" x-cloak>
-        <div class="mb-6 flex justify-between items-center">
-            <h2 class="text-2xl font-bold">Daftar Kategori</h2>
-            <button @click="openAddModal()" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center gap-2">
+        <div class="mb-6 flex flex-row justify-between items-center gap-4">
+            <h2 class="text-xl sm:text-2xl font-bold">Daftar Kategori</h2>
+            <button @click="openAddModal()" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center justify-center gap-2 sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                Tambah Kategori
+                <span class="hidden sm:inline">Tambah Kategori</span>
+                <span class="sm:hidden">Tambah</span>
             </button>
         </div>
 
@@ -14,28 +15,52 @@
             </div>
         @endif
 
+        <!-- Custom Scrollbar Styles -->
+        <style>
+            .custom-table-scroll::-webkit-scrollbar {
+                height: 8px;
+                width: 8px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        </style>
+
+        <!-- Scrollable Table -->
         <div class="bg-[var(--color-dark-card)] rounded-xl overflow-hidden border border-white/10">
-            <table class="w-full text-left">
-                <thead class="bg-gray-800 text-gray-400">
-                    <tr>
-                        <th class="p-4">Nama Kategori</th>
-                        <th class="p-4">Jumlah Menu</th>
-                        <th class="p-4">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700">
-                    @foreach($categories as $category)
+            <div class="overflow-x-auto custom-table-scroll">
+                <table class="w-full text-left min-w-[400px]">
+                    <thead class="bg-gray-800 text-gray-400 text-xs sm:text-sm">
                         <tr>
-                            <td class="p-4 font-medium">{{ $category->name }}</td>
-                            <td class="p-4 text-gray-400">{{ $category->products_count ?? 0 }} Menu</td>
-                            <td class="p-4 flex gap-3">
-                                <button @click="editCategory({{ $category->toJson() }})" class="text-blue-400 hover:text-blue-300 font-medium text-sm transition">Edit</button>
-                                <button @click="confirmDelete({{ $category->id }}, '{{ $category->name }}')" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Hapus</button>
-                            </td>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Nama Kategori</th>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Jumlah Menu</th>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 text-sm">
+                        @foreach($categories as $category)
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 sm:p-4 font-medium whitespace-nowrap">{{ $category->name }}</td>
+                                <td class="p-3 sm:p-4 text-gray-400 whitespace-nowrap">{{ $category->products_count ?? 0 }} Menu</td>
+                                <td class="p-3 sm:p-4 whitespace-nowrap">
+                                    <div class="flex gap-3">
+                                        <button @click="editCategory({{ $category->toJson() }})" class="text-blue-400 hover:text-blue-300 font-medium text-sm transition">Edit</button>
+                                        <button @click="confirmDelete({{ $category->id }}, '{{ $category->name }}')" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Hapus</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Add Category Modal -->
