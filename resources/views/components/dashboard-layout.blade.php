@@ -6,10 +6,10 @@
     <title>Dashboard - Ulu Coffee</title>
     <script>
         window.ReverbConfig = {
-            key: "{{ config('reverb.apps.0.key') }}",
-            host: "{{ config('reverb.servers.reverb.options.host', request()->getHost()) }}",
-            port: {{ config('reverb.servers.reverb.options.port', 443) }},
-            scheme: "{{ config('reverb.servers.reverb.options.scheme', 'https') }}"
+            key: "{{ config('reverb.apps.apps.0.key') }}",
+            host: "{{ config('reverb.apps.apps.0.options.host', request()->getHost()) }}",
+            port: {{ config('reverb.apps.apps.0.options.port', 443) }},
+            scheme: "{{ config('reverb.apps.apps.0.options.scheme', 'https') }}"
         };
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])

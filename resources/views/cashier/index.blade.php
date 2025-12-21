@@ -238,17 +238,19 @@
 
     @push('scripts')
     <script type="module">
-        console.log('Listening for orders...');
-        Echo.channel('cashier')
-            .listen('OrderUpdate', (e) => {
-                console.log('Order Update Received:', e);
-                // Play notification sound if desired
-                // const audio = new Audio('/notification.mp3');
-                // audio.play();
-                
-                // Reload to fetch fresh data
-                window.location.reload();
-            });
+        // Wait a moment for Echo to initialize
+        setTimeout(() => {
+            if (window.Echo) {
+                console.log('Listening for orders...');
+                window.Echo.channel('cashier')
+                    .listen('OrderUpdate', (e) => {
+                        console.log('Order Update Received:', e);
+                        window.location.reload();
+                    });
+            } else {
+                console.log('Echo not available - real-time updates disabled');
+            }
+        }, 500);
     </script>
     @endpush
 </x-dashboard-layout>
