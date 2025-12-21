@@ -5,9 +5,9 @@
         </div>
     @endif
 
-    @if(session('error'))
+    @if(session('error') || isset($error))
         <div class="bg-red-500/20 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6">
-            {{ session('error') }}
+            {{ session('error') ?? $error }}
         </div>
     @endif
 
