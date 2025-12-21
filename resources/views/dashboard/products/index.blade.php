@@ -1,10 +1,11 @@
 <x-dashboard-layout title="Daftar Menu Makanan">
     <div x-data="productManager()" x-cloak>
-        <div class="mb-6 flex justify-between items-center">
-            <h2 class="text-2xl font-bold">Daftar Menu</h2>
-            <button @click="openAddModal()" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center gap-2">
+        <div class="mb-6 flex flex-row justify-between items-center gap-4">
+            <h2 class="text-xl sm:text-2xl font-bold">Daftar Menu</h2>
+            <button @click="openAddModal()" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center justify-center gap-2 sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                Tambah Menu
+                <span class="hidden sm:inline">Tambah Menu</span>
+                <span class="sm:hidden">Tambah</span>
             </button>
         </div>
 
@@ -14,42 +15,66 @@
             </div>
         @endif
 
+        <!-- Custom Scrollbar Styles -->
+        <style>
+            .custom-table-scroll::-webkit-scrollbar {
+                height: 8px;
+                width: 8px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-track {
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 4px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+            }
+            .custom-table-scroll::-webkit-scrollbar-thumb:hover {
+                background: rgba(255, 255, 255, 0.3);
+            }
+        </style>
+
+        <!-- Scrollable Table -->
         <div class="bg-[var(--color-dark-card)] rounded-xl overflow-hidden border border-white/10">
-            <table class="w-full text-left">
-                <thead class="bg-gray-800 text-gray-400">
-                    <tr>
-                        <th class="p-4">Nama</th>
-                        <th class="p-4">Kategori</th>
-                        <th class="p-4">Harga</th>
-                        <th class="p-4">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-700">
-                    @foreach($products as $product)
+            <div class="overflow-x-auto custom-table-scroll">
+                <table class="w-full text-left min-w-[500px]">
+                    <thead class="bg-gray-800 text-gray-400 text-xs sm:text-sm">
                         <tr>
-                            <td class="p-4 font-medium">{{ $product->name }}</td>
-                            <td class="p-4 text-gray-400">{{ $product->category->name }}</td>
-                            <td class="p-4">
-                                @if($product->discount_amount > 0)
-                                    <div>
-                                        <span class="text-xs text-red-400 line-through block">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
-                                        <span class="text-white font-bold">Rp {{ number_format($product->final_price, 0, ',', '.') }}</span>
-                                        <span class="text-[10px] bg-red-500/20 text-red-400 px-1 py-0.5 rounded ml-1">
-                                            -{{ $product->discount_type == 'percent' ? $product->discount_amount . '%' : 'Rp ' . number_format($product->discount_amount, 0, ',', '.') }}
-                                        </span>
-                                    </div>
-                                @else
-                                    Rp {{ number_format($product->price, 0, ',', '.') }}
-                                @endif
-                            </td>
-                            <td class="p-4 flex gap-3">
-                                <button @click="editProduct({{ $product->toJson() }}, '{{ $product->image ? (Str::startsWith($product->image, 'http') ? $product->image : asset('storage/' . $product->image)) : '' }}')" class="text-blue-400 hover:text-blue-300 font-medium text-sm transition">Edit</button>
-                                <button @click="confirmDelete({{ $product->id }}, '{{ $product->name }}')" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Hapus</button>
-                            </td>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Nama</th>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Kategori</th>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Harga</th>
+                            <th class="p-3 sm:p-4 whitespace-nowrap">Aksi</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-gray-700 text-sm">
+                        @foreach($products as $product)
+                            <tr class="hover:bg-white/5 transition-colors">
+                                <td class="p-3 sm:p-4 font-medium whitespace-nowrap">{{ $product->name }}</td>
+                                <td class="p-3 sm:p-4 text-gray-400 whitespace-nowrap">{{ $product->category->name }}</td>
+                                <td class="p-3 sm:p-4 whitespace-nowrap">
+                                    @if($product->discount_amount > 0)
+                                        <div>
+                                            <span class="text-xs text-red-400 line-through block">Rp {{ number_format($product->price, 0, ',', '.') }}</span>
+                                            <span class="text-white font-bold">Rp {{ number_format($product->final_price, 0, ',', '.') }}</span>
+                                            <span class="text-[10px] bg-red-500/20 text-red-400 px-1 py-0.5 rounded ml-1">
+                                                -{{ $product->discount_type == 'percent' ? $product->discount_amount . '%' : 'Rp ' . number_format($product->discount_amount, 0, ',', '.') }}
+                                            </span>
+                                        </div>
+                                    @else
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    @endif
+                                </td>
+                                <td class="p-3 sm:p-4 whitespace-nowrap">
+                                    <div class="flex gap-3">
+                                        <button @click="editProduct({{ $product->toJson() }}, '{{ $product->image ? (Str::startsWith($product->image, 'http') ? $product->image : asset('storage/' . $product->image)) : '' }}')" class="text-blue-400 hover:text-blue-300 font-medium text-sm transition">Edit</button>
+                                        <button @click="confirmDelete({{ $product->id }}, '{{ $product->name }}')" class="text-red-400 hover:text-red-300 font-medium text-sm transition">Hapus</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Add Product Modal -->

@@ -15,6 +15,6 @@ class Banner extends Model
         if (str_starts_with($this->image_path, 'http')) {
             return $this->image_path;
         }
-        return Storage::url($this->image_path);
+        return asset('storage/' . $this->image_path);
     }
 }

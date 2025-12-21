@@ -1,31 +1,51 @@
 <x-dashboard-layout>
     <x-slot name="title">Riwayat Pesanan</x-slot>
 
+    <!-- Custom Scrollbar Styles -->
+    <style>
+        .custom-table-scroll::-webkit-scrollbar {
+            height: 8px;
+            width: 8px;
+        }
+        .custom-table-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        .custom-table-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        .custom-table-scroll::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+
+    <!-- Scrollable Table -->
     <div class="bg-[var(--color-dark-card)] rounded-xl border border-white/10 overflow-hidden">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left">
+        <div class="overflow-x-auto custom-table-scroll">
+            <table class="w-full text-left min-w-[700px]">
                 <thead class="bg-white/5 text-gray-400 text-xs font-bold uppercase tracking-wider border-b border-white/10">
                     <tr>
-                        <th class="px-6 py-4">Waktu</th>
-                        <th class="px-6 py-4">Order ID</th>
-                        <th class="px-6 py-4">Meja</th>
-                        <th class="px-6 py-4">Detail Pesanan</th>
-                        <th class="px-6 py-4">Total</th>
-                        <th class="px-6 py-4">Status</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Waktu</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Order ID</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Meja</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Detail Pesanan</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Total</th>
+                        <th class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">Status</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-white/5">
+                <tbody class="divide-y divide-white/5 text-sm">
                     @forelse($orders as $order)
-                        <tr class="hover:bg-white/5 transition-colors group">
-                            <td class="px-6 py-4 text-gray-400 text-sm whitespace-nowrap">
+                        <tr class="hover:bg-white/5 transition-colors">
+                            <td class="px-4 sm:px-6 py-3 sm:py-4 text-gray-400 whitespace-nowrap">
                                 <div class="flex flex-col">
                                     <span class="text-white">{{ $order->updated_at->format('d M Y') }}</span>
                                     <span class="text-xs">{{ $order->updated_at->format('H:i') }}</span>
                                 </div>
                             </td>
-                            <td class="px-6 py-4 text-sm font-mono text-gray-400">#{{ substr($order->id, -6) }}</td>
-                            <td class="px-6 py-4 text-sm font-bold">Meja {{ $order->table_number }}</td>
-                            <td class="px-6 py-4 text-sm">
+                            <td class="px-4 sm:px-6 py-3 sm:py-4 font-mono text-gray-400 whitespace-nowrap">#{{ substr($order->id, -6) }}</td>
+                            <td class="px-4 sm:px-6 py-3 sm:py-4 font-bold whitespace-nowrap">Meja {{ $order->table_number }}</td>
+                            <td class="px-4 sm:px-6 py-3 sm:py-4">
                                 <ul class="space-y-1">
                                     @foreach($order->items as $item)
                                         <li class="flex gap-2 text-gray-300">
@@ -38,10 +58,10 @@
                                     <p class="text-xs text-yellow-500 mt-1 italic">"{{ $order->notes }}"</p>
                                 @endif
                             </td>
-                             <td class="px-6 py-4 text-sm font-bold text-white whitespace-nowrap">
+                            <td class="px-4 sm:px-6 py-3 sm:py-4 font-bold text-white whitespace-nowrap">
                                 Rp {{ number_format($order->total_amount, 0, ',', '.') }}
                             </td>
-                            <td class="px-6 py-4 text-sm">
+                            <td class="px-4 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                                 @if($order->status == 'delivered')
                                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-green-500/10 text-green-500 border border-green-500/20">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>

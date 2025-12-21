@@ -1,11 +1,12 @@
 <x-dashboard-layout title="Manajemen Banner">
     <div x-data="bannerManager()" x-cloak>
         <!-- Header -->
-        <div class="mb-6 flex justify-between items-center">
-            <h2 class="text-2xl font-bold">Banner Promo</h2>
-            <button @click="showAddModal = true" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center gap-2">
+        <div class="mb-6 flex flex-row justify-between items-center gap-4">
+            <h2 class="text-xl sm:text-2xl font-bold">Banner Promo</h2>
+            <button @click="showAddModal = true" class="bg-[var(--color-primary)] text-white px-4 py-2 rounded-lg font-bold hover:bg-opacity-90 transition flex items-center justify-center gap-2 sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
-                Tambah Banner
+                <span class="hidden sm:inline">Tambah Banner</span>
+                <span class="sm:hidden">Tambah</span>
             </button>
         </div>
 

@@ -2,21 +2,33 @@
     <!-- Auto Refresh Meta -->
     <meta http-equiv="refresh" content="30">
 
-    <div class="mb-8 flex justify-between items-center">
-        <div>
-            <h1 class="text-3xl font-bold mb-2">Dapur & Kasir</h1>
-            <p class="text-gray-400">Pantau dan kelola pesanan masuk secara real-time</p>
-        </div>
-        <div class="flex gap-4">
-             <div class="flex items-center gap-2 text-sm text-gray-400">
-                <span class="w-3 h-3 rounded-full bg-yellow-500"></span> Pending
-                <span class="w-3 h-3 rounded-full bg-blue-500"></span> Proses
-                <span class="w-3 h-3 rounded-full bg-green-500"></span> Siap
+    <div class="mb-6 sm:mb-8">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
+            <div>
+                <h1 class="text-2xl sm:text-3xl font-bold mb-1 sm:mb-2">Dapur & Kasir</h1>
+                <p class="text-gray-400 text-sm sm:text-base">Pantau dan kelola pesanan masuk secara real-time</p>
             </div>
-            <button onclick="window.location.reload()" class="bg-[var(--color-dark-card)] hover:bg-[var(--color-primary)] hover:text-white text-gray-300 px-4 py-2 rounded-lg transition-all flex items-center gap-2">
+            <button onclick="window.location.reload()" class="bg-[var(--color-dark-card)] hover:bg-[var(--color-primary)] hover:text-white text-gray-300 px-4 py-2 rounded-lg transition-all flex items-center justify-center gap-2 w-full sm:w-auto">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
                 Refresh
             </button>
+        </div>
+        
+        <!-- Status Legend -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-gray-400">
+            <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500"></span>
+                <span>Pending</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-blue-500"></span>
+                <span>Proses</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500"></span>
+                <span>Siap</span>
+            </div>
         </div>
     </div>
 
