@@ -33,47 +33,60 @@
 
         <!-- Hero Section with Carousel (PRESERVED) -->
         @if($banners->count() > 0)
-            <div class="relative h-[50vh] md:h-[60vh] overflow-hidden mb-8 group" 
+            <div class="relative pt-20 overflow-hidden mb-8 group" 
                  x-data="{ activeSlide: 0, slides: {{ $banners->count() }}, timer: null }" 
                  x-init="timer = setInterval(() => { activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1 }, 6000)">
+                <!-- Banner Container with 3:1 aspect ratio -->
                 
-                @foreach($banners as $index => $banner)
-                    <div class="absolute inset-0 transition-transform duration-1000 ease-out"
-                         x-show="activeSlide === {{ $index }}"
-                         x-transition:enter="transition ease-out duration-1000"
-                         x-transition:enter-start="opacity-0 scale-105"
-                         x-transition:enter-end="opacity-100 scale-100"
-                         x-transition:leave="transition ease-in duration-1000"
-                         x-transition:leave-start="opacity-100 scale-100"
-                         x-transition:leave-end="opacity-0 scale-95">
-                        <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}" class="w-full h-full object-cover">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-black/50 to-transparent"></div>
-                        <div class="absolute inset-x-0 bottom-0 pb-20 container mx-auto px-6">
-                            <div class="max-w-3xl" x-show="activeSlide === {{ $index }}"
-                                 x-transition:enter="transition ease-out duration-1000 delay-300"
-                                 x-transition:enter-start="opacity-0 translate-y-10"
-                                 x-transition:enter-end="opacity-100 translate-y-0">
-                                @if($banner->title)
-                                    <h2 class="text-4xl md:text-6xl font-bold text-white mb-3">{{ $banner->title }}</h2>
-                                @endif
-                                @if($banner->description)
-                                    <p class="text-lg md:text-xl text-gray-200 font-light">{{ $banner->description }}</p>
-                                @endif
+                <div class="relative w-full" style="aspect-ratio: 3/1;">
+                    @foreach($banners as $index => $banner)
+                        <div class="absolute inset-0 transition-transform duration-1000 ease-out"
+                             x-show="activeSlide === {{ $index }}"
+                             x-transition:enter="transition ease-out duration-1000"
+                             x-transition:enter-start="opacity-0 scale-105"
+                             x-transition:enter-end="opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-1000"
+                             x-transition:leave-start="opacity-100 scale-100"
+                             x-transition:leave-end="opacity-0 scale-95">
+                            <img src="{{ $banner->image_url }}" alt="{{ $banner->title }}" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-black/30 to-transparent"></div>
+                            <!-- Title/Description Overlay -->
+                            <div class="absolute inset-x-0 bottom-0 pb-4 md:pb-8 container mx-auto px-4 md:px-6">
+                                <div class="max-w-3xl" x-show="activeSlide === {{ $index }}"
+                                     x-transition:enter="transition ease-out duration-1000 delay-300"
+                                     x-transition:enter-start="opacity-0 translate-y-10"
+                                     x-transition:enter-end="opacity-100 translate-y-0">
+                                    @if($banner->title)
+                                        <h2 class="text-xl md:text-4xl lg:text-5xl font-bold text-white mb-1 md:mb-3 drop-shadow-lg">{{ $banner->title }}</h2>
+                                    @endif
+                                    @if($banner->description)
+                                        <p class="text-sm md:text-lg lg:text-xl text-gray-200 font-light drop-shadow-md line-clamp-2">{{ $banner->description }}</p>
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
                  
                 <!-- Navigation Controls -->
-                <div class="absolute bottom-10 right-10 flex gap-2 z-20">
+                <div class="absolute bottom-2 md:bottom-6 right-2 md:right-6 flex gap-1 md:gap-2 z-20">
                     <button @click="activeSlide = activeSlide === 0 ? slides - 1 : activeSlide - 1; clearInterval(timer); timer = setInterval(() => { activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1 }, 6000)" 
-                            class="w-10 h-10 rounded-full bg-black/30 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/40 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
                     </button>
                     <button @click="activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1; clearInterval(timer); timer = setInterval(() => { activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1 }, 6000)" 
-                            class="w-10 h-10 rounded-full bg-black/30 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/40 backdrop-blur text-white flex items-center justify-center hover:bg-white/20 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="md:w-5 md:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                     </button>
+                </div>
+
+                <!-- Slide Indicators -->
+                <div class="absolute bottom-2 md:bottom-6 left-1/2 transform -translate-x-1/2 flex gap-1.5 md:gap-2 z-20">
+                    @foreach($banners as $index => $banner)
+                        <button @click="activeSlide = {{ $index }}; clearInterval(timer); timer = setInterval(() => { activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1 }, 6000)"
+                                class="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300"
+                                :class="activeSlide === {{ $index }} ? 'bg-white w-6 md:w-8' : 'bg-white/40 hover:bg-white/60'"></button>
+                    @endforeach
                 </div>
             </div>
         @else
