@@ -3,6 +3,15 @@
 }
 
 {$DOMAIN_NAME:localhost} {
+    # WebSocket proxy for Reverb
+    @websocket {
+        path /app/*
+        header Connection *Upgrade*
+        header Upgrade websocket
+    }
+    reverse_proxy @websocket reverb:8080
+
+    # Main app proxy
     reverse_proxy app:8000
 
     header {

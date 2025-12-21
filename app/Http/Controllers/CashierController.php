@@ -37,6 +37,8 @@ class CashierController extends Controller
         $order->status = $request->status;
         $order->save();
 
+        \App\Events\OrderUpdate::dispatch('Order #' . $order->id . ' status updated to ' . $request->status);
+
         return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui.');
     }
 }

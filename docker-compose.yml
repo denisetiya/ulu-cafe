@@ -51,6 +51,27 @@ services:
       retries: 3
       start_period: 10s
 
+  # ============================================
+  # Laravel Reverb WebSocket Server
+  # ============================================
+  reverb:
+    image: ${IMAGE_TAG:-ghcr.io/denisetiya/ulu-cafe:latest}
+    container_name: ulucafe-reverb
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      - ./.env:/app/.env
+    networks:
+      - ulucafe-network
+    command: ["php", "artisan", "reverb:start", "--host=0.0.0.0", "--port=8080"]
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
 networks:
   ulucafe-network:
     driver: bridge
