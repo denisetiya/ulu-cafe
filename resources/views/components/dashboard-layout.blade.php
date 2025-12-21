@@ -167,5 +167,6 @@
             document.getElementById('sidebar-backdrop').style.pointerEvents = 'none';
         }
     </script>
+    @stack('scripts')
 </body>
 </html>

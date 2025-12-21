@@ -234,4 +234,21 @@
             </div>
         </div>
     </div>
+    </div>
+
+    @push('scripts')
+    <script type="module">
+        console.log('Listening for orders...');
+        Echo.channel('cashier')
+            .listen('OrderUpdate', (e) => {
+                console.log('Order Update Received:', e);
+                // Play notification sound if desired
+                // const audio = new Audio('/notification.mp3');
+                // audio.play();
+                
+                // Reload to fetch fresh data
+                window.location.reload();
+            });
+    </script>
+    @endpush
 </x-dashboard-layout>
