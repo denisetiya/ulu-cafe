@@ -7,9 +7,9 @@
     <script>
         window.ReverbConfig = {
             key: "{{ config('reverb.apps.apps.0.key') }}",
-            host: "{{ config('reverb.apps.apps.0.options.host', request()->getHost()) }}",
-            port: {{ config('reverb.apps.apps.0.options.port', 443) }},
-            scheme: "{{ config('reverb.apps.apps.0.options.scheme', 'https') }}"
+            host: "{{ request()->getHost() }}",
+            port: {{ request()->secure() ? 443 : 80 }},
+            scheme: "{{ request()->secure() ? 'https' : 'http' }}"
         };
     </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
