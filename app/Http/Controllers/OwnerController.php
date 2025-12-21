@@ -20,47 +20,71 @@ class OwnerController extends Controller
 
     public function index()
     {
-        // Stats
-        $todaySales = Order::where('payment_status', 'paid')
-            ->whereDate('created_at', today())
-            ->sum('total_amount');
+        try {
+            // Stats
+            $todaySales = Order::where('payment_status', 'paid')
+                ->whereDate('created_at', today())
+                ->sum('total_amount');
 
-        $monthlySales = Order::where('payment_status', 'paid')
-            ->whereMonth('created_at', now()->month)
-            ->sum('total_amount');
+            $monthlySales = Order::where('payment_status', 'paid')
+                ->whereMonth('created_at', now()->month)
+                ->sum('total_amount');
 
-        $totalOrders = Order::where('payment_status', 'paid')->count();
+            $totalOrders = Order::where('payment_status', 'paid')->count();
 
-        // Best selling products
-        $bestSellers = DB::table('order_items')
-            ->join('products', 'order_items.product_id', '=', 'products.id')
-            ->join('orders', 'order_items.order_id', '=', 'orders.id')
-            ->where('orders.payment_status', 'paid')
-            ->select('products.name', DB::raw('SUM(order_items.quantity) as total_sold'))
-            ->groupBy('products.id', 'products.name')
-            ->orderByDesc('total_sold')
-            ->take(5)
-            ->get();
+            // Best selling products
+            $bestSellers = DB::table('order_items')
+                ->join('products', 'order_items.product_id', '=', 'products.id')
+                ->join('orders', 'order_items.order_id', '=', 'orders.id')
+                ->where('orders.payment_status', 'paid')
+                ->select('products.name', DB::raw('SUM(order_items.quantity) as total_sold'))
+                ->groupBy('products.id', 'products.name')
+                ->orderByDesc('total_sold')
+                ->take(5)
+                ->get();
 
-        // Iris Balance
-        $balance = $this->irisService->getBalance();
-        $irisBalance = $balance['balance'] ?? 0;
+            // Iris Balance - with error handling
+            $irisBalance = 0;
+            try {
+                $balance = $this->irisService->getBalance();
+                $irisBalance = $balance['balance'] ?? 0;
+            } catch (\Exception $e) {
+                \Log::warning('Iris balance fetch failed: ' . $e->getMessage());
+            }
 
-        // Banks list
-        $banks = $this->irisService->getBanks();
+            // Banks list
+            $banks = $this->irisService->getBanks();
 
-        // Withdrawal history
-        $withdrawals = Withdrawal::latest()->take(10)->get();
+            // Withdrawal history - with error handling
+            $withdrawals = collect();
+            try {
+                $withdrawals = Withdrawal::latest()->take(10)->get();
+            } catch (\Exception $e) {
+                \Log::warning('Withdrawal fetch failed: ' . $e->getMessage());
+            }
 
-        return view('owner.index', compact(
-            'todaySales', 
-            'monthlySales', 
-            'totalOrders', 
-            'bestSellers',
-            'irisBalance',
-            'banks',
-            'withdrawals'
-        ));
+            return view('owner.index', compact(
+                'todaySales', 
+                'monthlySales', 
+                'totalOrders', 
+                'bestSellers',
+                'irisBalance',
+                'banks',
+                'withdrawals'
+            ));
+        } catch (\Exception $e) {
+            \Log::error('Owner Dashboard Error: ' . $e->getMessage());
+            return view('owner.index', [
+                'todaySales' => 0,
+                'monthlySales' => 0,
+                'totalOrders' => 0,
+                'bestSellers' => collect(),
+                'irisBalance' => 0,
+                'banks' => [],
+                'withdrawals' => collect(),
+                'error' => 'Terjadi kesalahan saat memuat data: ' . $e->getMessage(),
+            ]);
+        }
     }
 
     public function processWithdraw(Request $request)
