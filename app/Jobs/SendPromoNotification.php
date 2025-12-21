@@ -58,9 +58,9 @@ class SendPromoNotification implements ShouldQueue
             ->get();
 
         foreach ($users as $index => $user) {
-            // Delay each email by 2 seconds to avoid rate limiting (2 req/sec limit)
+            // Delay each email by 3 seconds to avoid rate limiting (2 req/sec limit)
             self::dispatch($this->promoType, $this->promoData, $user->email)
-                ->delay(now()->addSeconds(($index + 1) * 2));
+                ->delay(now()->addSeconds(($index + 1) * 3));
         }
     }
 }

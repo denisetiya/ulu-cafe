@@ -17,6 +17,20 @@ class PromoNotification extends Mailable implements ShouldQueue
     public $promoData;
 
     /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
+
+    /**
+     * The number of seconds to wait before retrying the job.
+     *
+     * @var int
+     */
+    public $backoff = 10;
+
+    /**
      * Create a new message instance.
      */
     public function __construct(string $promoType, array $promoData)
