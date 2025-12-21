@@ -56,8 +56,7 @@ RUN install-php-extensions \
     intl \
     zip \
     gd \
-    bcmath \
-    pcntl
+    bcmath
 
 # Configure PHP for production
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"

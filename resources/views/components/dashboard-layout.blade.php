@@ -4,14 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Ulu Coffee</title>
-    <script>
-        window.ReverbConfig = {
-            key: "{{ config('reverb.apps.apps.0.key') }}",
-            host: "{{ request()->getHost() }}",
-            port: {{ request()->secure() ? 443 : 80 }},
-            scheme: "{{ request()->secure() ? 'https' : 'http' }}"
-        };
-    </script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" type="image/png" href="{{ asset('logo/logo-background.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -175,6 +167,5 @@
             document.getElementById('sidebar-backdrop').style.pointerEvents = 'none';
         }
     </script>
-    @stack('scripts')
 </body>
 </html>

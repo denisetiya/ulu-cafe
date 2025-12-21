@@ -262,7 +262,6 @@ class OrderController extends Controller
                 } else if ($transactionStatus == 'settlement') {
                     $order->payment_status = 'paid';
                     $order->save();
-                    \App\Events\OrderUpdate::dispatch('Order #' . $order->id . ' baru saja masuk!');
                 } else if ($transactionStatus == 'cancel' || $transactionStatus == 'deny' || $transactionStatus == 'expire') {
                     $order->payment_status = 'failed';
                     $order->save();
