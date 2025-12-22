@@ -53,8 +53,14 @@ fi
 # Start queue worker in background if QUEUE_WORKER is set
 if [ "$QUEUE_WORKER" = "true" ]; then
     echo "👷 Starting queue worker in background..."
-    # Use sync driver if database queue is problematic
-    php artisan queue:work --sleep=3 --tries=3 --max-time=3600 &
+    # Loop to auto-restart worker after processing 1000 jobs (prevents memory leaks)
+    (
+        while true; do
+            php artisan queue:work --sleep=3 --tries=3 --max-jobs=1000
+            echo "🔄 Queue worker restarting..."
+            sleep 5
+        done
+    ) &
 fi
 
 echo "✅ Application ready!"
