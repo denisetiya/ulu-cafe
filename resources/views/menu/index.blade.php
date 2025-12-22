@@ -33,7 +33,7 @@
 
         <!-- Hero Section with Carousel (PRESERVED) -->
         @if($banners->count() > 0)
-            <div class="relative pt-20 overflow-hidden mb-8 group" 
+            <div class="relative overflow-hidden mb-8 group" 
                  x-data="{ activeSlide: 0, slides: {{ $banners->count() }}, timer: null }" 
                  x-init="timer = setInterval(() => { activeSlide = activeSlide === slides - 1 ? 0 : activeSlide + 1 }, 6000)">
                 <!-- Banner Container with 3:1 aspect ratio -->
